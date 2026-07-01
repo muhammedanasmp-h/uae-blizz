@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Insights & News | Blizz UAE Wholesale Blog</title>
+  <meta name="description" content="Stay updated with the latest in commercial cleaning, hygiene standards, and wholesale supply chain news from Blizz UAE.">
+  <link rel="stylesheet" href="style.css?v=160">
+</head>
+<body>
+
+  <!-- Header -->
+  <header id="header">
+    <div class="container">
+      <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle menu">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+      <a href="/" class="logo header-logo">
+        <img src="asset/company logo/logo.png" alt="Blizz Logo">
+      </a>
+      <div class="nav-right-glass">
+        <nav>
+          <ul>
+            <li><a href="/" class="nav-link" data-sec="home">Home</a></li>
+            <li><a href="about" class="nav-link" data-sec="about">About Us</a></li>
+            <li><a href="products" class="nav-link" data-sec="products">Products</a></li>
+            <li><a href="blog" class="nav-link active" data-sec="blog">Blog</a></li>
+            <li><a href="enquiry" class="nav-link" data-sec="contact">Enquiry</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Blog Hero Section -->
+  <section class="catalog-hero" style="background: linear-gradient(135deg, #eef2f3 0%, #8e9eab 100%);">
+    <div class="container catalog-hero-container">
+      <div class="breadcrumbs">
+        <a href="/">Home</a> <span class="separator">/</span> <span class="current">Blog</span>
+      </div>
+      <h1 class="catalog-hero-title" style="color: #1a1a1a;">Industry Insights</h1>
+      <p class="catalog-hero-desc" style="color: #475569;">Expert advice on commercial hygiene, product deep-dives, and updates from the world of bulk cleaning supplies.</p>
+    </div>
+  </section>
+
+  <!-- Blog Bento Grid Section -->
+  <section class="blog-bento-section">
+    <div class="container">
+      
+      <!-- Search & Filters Toolbar -->
+      <div class="blog-toolbar">
+        <div class="blog-search-box">
+          <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="blog-search" placeholder="Search articles, insights, and news...">
+        </div>
+        <div class="blog-filters">
+          <button class="filter-pill active">All</button>
+          <button class="filter-pill">Industry News</button>
+          <button class="filter-pill">Hygiene Standards</button>
+          <button class="filter-pill">Product Spotlight</button>
+        </div>
+      </div>
+
+      <div class="blog-bento-grid" id="blog-bento-grid">
+        <!-- Dynamically rendered blog posts will go here -->
+      </div>
+
+      <script>
+        async function fetchBlogs() {
+          const grid = document.getElementById('blog-bento-grid');
+          try {
+            const res = await fetch('/api/blog');
+            if (!res.ok) throw new Error('API down');
+            const posts = await res.json();
+
+            if (posts.length === 0) {
+              renderDefaultFallback();
+              return;
+            }
+
+            grid.innerHTML = '';
+            posts.forEach(post => {
+              const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
+                year: 'numeric', month: 'long', day: 'numeric'
+              });
+
+              const card = document.createElement('a');
+              card.href = `blog-single?slug=${post.slug}`;
+              card.className = 'blog-card standard-blog';
+              card.innerHTML = `
+                <div class="blog-img-wrapper">
+                  <img src="${post.image || 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%23ccc\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z\'/%3E%3C/svg%3E'}" alt="${post.title}">
+                </div>
+                <div class="blog-content">
+                  <div class="blog-meta">
+                    <span class="blog-category">${post.category}</span>
+                    <span class="blog-date">${formattedDate}</span>
+                  </div>
+                  <h3 class="blog-title">${post.title}</h3>
+                  <p class="blog-excerpt">${post.excerpt}</p>
+                  <span class="blog-read-more">Read Article &rarr;</span>
+                </div>
+              `;
+              grid.appendChild(card);
+            });
+            setupSearchAndFilter(posts);
+
+          } catch(err) {
+            console.warn("Unable to connect to live API database, rendering static backup items.", err);
+            renderDefaultFallback();
+          }
+        }
+
+        function renderDefaultFallback() {
+          const grid = document.getElementById('blog-bento-grid');
+          const fallbackData = [
+            {
+              title: "The Future of Bulk Laundry: Why High-Concentrate Liquids Are Taking Over Hotels",
+              category: "Industry News",
+              date: "2026-06-24",
+              excerpt: "Explore the cost-saving benefits and environmental impact of switching your hospitality business to high-concentrate liquid detergents.",
+              image: "asset/products/liquid detergent 4kg ocean.png",
+              slug: "future-of-bulk-laundry"
+            },
+            {
+              title: "Hospital-Grade Floor Cleaning: Best Practices for 2026",
+              category: "Hygiene Standards",
+              date: "2026-06-18",
+              excerpt: "Discover high standards and guidelines for sanitizing floors in medical complexes, warehouses, and hospitality structures.",
+              image: "asset/products/floor cleaner.png",
+              slug: "hospital-grade-floor-cleaning"
+            },
+            {
+              title: "The Psychology of Scent: Why Pearl Hand Wash Increases Customer Satisfaction",
+              category: "Product Spotlight",
+              date: "2026-06-10",
+              excerpt: "Learn how scent branding boosts overall consumer appreciation and shapes operational sanitation benchmarks.",
+              image: "asset/products/hand wash liq.png",
+              slug: "psychology-of-scent-hand-wash"
+            },
+            {
+              title: "Streak-Free Commercial Glass Cleaning at Scale",
+              category: "Tips & Tricks",
+              date: "2026-06-02",
+              excerpt: "Avoid common streaks and clean bulk exterior window arrays with industrial strength glass cleaning formulas.",
+              image: "asset/products/glass cleaner.png",
+              slug: "streak-free-glass-cleaning"
+            },
+            {
+              title: "Optimizing Your Detergent Powder Inventory for Q3",
+              category: "Supply Chain",
+              date: "2026-05-28",
+              excerpt: "Ensure peak efficiency and order frequency patterns match local supply timelines.",
+              image: "asset/produt page/detergent_powder_2.5kg.png",
+              slug: "optimizing-detergent-powder-inventory"
+            }
+          ];
+
+          grid.innerHTML = '';
+          fallbackData.forEach(post => {
+            const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
+              year: 'numeric', month: 'long', day: 'numeric'
+            });
+
+            const card = document.createElement('a');
+            card.href = `blog-single?slug=${post.slug}`;
+            card.className = 'blog-card standard-blog';
+            card.innerHTML = `
+              <div class="blog-img-wrapper">
+                <img src="${post.image}" alt="${post.title}">
+              </div>
+              <div class="blog-content">
+                <div class="blog-meta">
+                  <span class="blog-category">${post.category}</span>
+                  <span class="blog-date">${formattedDate}</span>
+                </div>
+                <h3 class="blog-title">${post.title}</h3>
+                <p class="blog-excerpt">${post.excerpt}</p>
+                <span class="blog-read-more">Read Article &rarr;</span>
+              </div>
+            `;
+            grid.appendChild(card);
+          });
+          setupSearchAndFilter(fallbackData);
+        }
+
+        function setupSearchAndFilter(posts) {
+          const searchInput = document.getElementById('blog-search');
+          const filterPills = document.querySelectorAll('.filter-pill');
+          let currentCategory = 'All';
+          let searchQuery = '';
+
+          function updateDisplay() {
+            const cards = document.querySelectorAll('.blog-card');
+            cards.forEach((card, idx) => {
+              const post = posts[idx];
+              if (!post) return;
+              
+              const matchesCategory = currentCategory === 'All' || post.category === currentCategory;
+              const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                    post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+
+              if (matchesCategory && matchesSearch) {
+                card.style.display = 'block';
+              } else {
+                card.style.display = 'none';
+              }
+            });
+          }
+
+          if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+              searchQuery = e.target.value;
+              updateDisplay();
+            });
+          }
+
+          filterPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+              filterPills.forEach(p => p.classList.remove('active'));
+              pill.classList.add('active');
+              currentCategory = pill.textContent.trim();
+              updateDisplay();
+            });
+          });
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchBlogs);
+      </script>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-grid">
+        <div class="footer-column brand-column">
+          <img src="asset/company logo/logo.png" alt="Blizz Logo" class="footer-logo">
+          <p class="footer-desc">Premium wholesale manufacturer of commercial hygiene solutions and industrial cleaning supplies across the UAE and GCC.</p>
+          <div class="social-links">
+            <a href="#" class="social-icon" aria-label="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a href="#" class="social-icon" aria-label="Twitter"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h4>Product Ranges</h4>
+          <ul class="footer-links">
+            <li><a href="products">Laundry & Detergents</a></li>
+            <li><a href="products">Sanitizers & Disinfectants</a></li>
+            <li><a href="products">Hand & Body Wash</a></li>
+            <li><a href="products">Surface & Floor Cleaners</a></li>
+            <li><a href="products">Specialty Wholesale Items</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="about">About Blizz</a></li>
+            <li><a href="products">Product Catalog</a></li>
+            <li><a href="enquiry">Wholesale Enquiry</a></li>
+            <li><a href="#">B2B Portal Login</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Dubai Headquarters</h4>
+          <div class="footer-contact">
+            <div class="footer-contact-item">
+              <div class="footer-contact-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <span>Industrial Area 3, Jebel Ali, Dubai, UAE</span>
+            </div>
+            <div class="footer-contact-item">
+              <div class="footer-contact-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <span>+971 50 854 6344</span>
+            </div>
+            <div class="footer-contact-item">
+              <div class="footer-contact-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <span>Blizzbusinessinfo@gmail.com</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blizz UAE (Blizz Wholesale Cleaning Brand). All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="terms-of-sale">Terms of Sale</a>
+          <a href="privacy-policy">Privacy Policy</a>
+          <a href="sitemap">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js?v=26"></script>
+</body>
+</html>

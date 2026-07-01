@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Blizz UAE | Premium Wholesale Cleaning Products</title>
+  <meta name="description" content="Blizz is the UAE-based wholesale supplier of premium commercial cleaning products, detergents, disinfectants, and hand care solutions. Contact us for bulk pricing.">
+  <link rel="stylesheet" href="style.css?v=160">
+</head>
+<body>
+
+
+  <!-- Header -->
+  <header id="header">
+    <div class="container">
+      <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle menu">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+      <a href="/" class="logo header-logo">
+        <img src="asset/company logo/logo.png" alt="Blizz Logo">
+      </a>
+      <div class="nav-right-glass">
+        <nav>
+          <ul>
+            <li><a href="/" class="nav-link active" data-sec="home">Home</a></li>
+            <li><a href="about" class="nav-link" data-sec="about">About Us</a></li>
+            <li><a href="products" class="nav-link" data-sec="products">Products</a></li>
+            <li><a href="blog" class="nav-link" data-sec="blog">Blog</a></li>
+            <li><a href="enquiry" class="nav-link" data-sec="contact">Enquiry</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Interactive Animated Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-bg-shape" id="hero-bg-shape">
+      <div class="hero-shape-img" id="hero-shape-img"></div>
+    </div>
+    <div class="mobile-wave-overlay" id="mobile-wave-overlay"></div>
+    <div class="mobile-hand mobile-hand-left" id="mobile-hand-left">
+      <img src="asset/bg animations/hand 1.png" alt="Hand Left">
+    </div>
+    <div class="mobile-hand mobile-hand-right" id="mobile-hand-right">
+      <img src="asset/bg animations/hand 2.png" alt="Hand Right">
+    </div>
+    <div class="container">
+      
+      <!-- Static Company Details -->
+      <div class="hero-content">
+        <h1 class="hero-title reveal reveal-up">Trusted Supplier of <span>Premium Cleaning</span> Products</h1>
+        <p class="hero-description reveal reveal-up delay-100">
+          We are the UAE's leading wholesale distributor of commercial-grade detergents, hospital-grade disinfectants, and luxury hand care solutions. We partner with top hotels, hospitals, and corporate facilities to deliver uncompromising cleanliness and hygiene.
+        </p>
+        
+
+
+        <div class="hero-actions reveal reveal-up delay-200">
+          <a href="#contact" class="btn btn-theme" id="hero-cta">Get Wholesale Pricing</a>
+          
+          <!-- Slider Nav controls -->
+          <div class="slider-nav">
+            <button class="slider-arrow" id="prev-btn" aria-label="Previous product">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            </button>
+            <div class="slider-dots" id="slider-dots">
+              <!-- JS will inject dots dynamically -->
+            </div>
+            <button class="slider-arrow" id="next-btn" aria-label="Next product">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Interactive Showcase Wheel -->
+      <div class="hero-showcase">
+        <div class="showcase-glow" id="showcase-glow"></div>
+        
+        <!-- Rotating Orbit -->
+        <div class="showcase-orbit reveal reveal-scale delay-100" id="showcase-orbit">
+          <!-- JS will inject orbit items here -->
+        </div>
+
+        <!-- Central Active Product Image & Details -->
+        <div class="active-product-wrapper reveal reveal-scale delay-200">
+          <!-- Dynamic Product Label (Layered behind image) -->
+          <div class="hero-product-label" id="hero-detail-title">Lavender Laundry Liquid</div>
+          
+          <img src="asset/products/liquid detergent 4kg lavender.png?v=3" alt="Active Cleaning Product" class="active-product-img" id="active-product-img">
+        </div>
+      </div>
+
+    </div>
+    
+    <!-- Hero Bottom Wavy Divider -->
+    <div class="hero-bottom-divider">
+      <svg viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,20 C150,20 150,90 300,90 C420,90 420,30 540,30 C720,30 720,90 900,90 C1050,90 1050,20 1200,20 L1200,120 L0,120 Z"></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Slim Product Carousel -->
+  <section id="quick-menu" class="quick-menu-section">
+    <div class="qm-container">
+      <div class="qm-header">
+        <span class="qm-subtitle reveal reveal-up">Explore</span>
+        <h2 class="qm-title reveal reveal-up delay-100">Our Collection</h2>
+        <div class="qm-nav">
+          <button class="qm-arrow" id="qm-prev" aria-label="Previous">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          </button>
+          <button class="qm-arrow" id="qm-next" aria-label="Next">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="qm-carousel" id="qm-carousel">
+        <!-- JS will inject pill cards here -->
+      </div>
+      <div class="qm-swipe-hint">
+        <span>Swipe to explore</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Guarantee & Delivery Section -->
+  <section id="guarantee" class="guarantee-section">
+    <div class="container">
+      <div class="guarantee-grid">
+        
+        <!-- Left Column: Delivery Guarantee -->
+        <div class="guarantee-col left-col">
+          <span class="guarantee-subtitle reveal reveal-left">We Guarantee</span>
+          <h2 class="guarantee-title reveal reveal-left delay-100">Fast & Reliable Delivery!</h2>
+          <p class="guarantee-desc reveal reveal-left delay-200">
+            Blizz UAE is the only wholesale commercial cleaning supplier that guarantees your bulk order will arrive on time and fully stocked, ensuring your facility never runs out of essential supplies.
+          </p>
+          <div class="guarantee-contact reveal reveal-left delay-300">
+            <div class="contact-icon-small">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div class="contact-text-small">
+              <span class="call-label">Call Us Free :</span>
+              <span class="call-number">+971 50 854 6344</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Center Column: Graphic -->
+        <div class="guarantee-col center-col">
+          <!-- Desktop: slideshow images -->
+          <div class="van-wrapper reveal reveal-scale">
+            <img src="asset/others/delivery/image1.png" class="slideshow-img img-1" alt="Delivery 1">
+            <img src="asset/others/delivery/image 2.png" class="slideshow-img img-2" alt="Delivery 2">
+            <img src="asset/others/delivery/image3.png" class="slideshow-img img-3" alt="Delivery 3">
+          </div>
+          <!-- Mobile only: scroll-driven truck animation -->
+          <div class="mobile-truck-scene" id="mobile-truck-scene">
+            <div class="mobile-truck-vehicle" id="mobile-truck-vehicle">
+              <img src="asset/bg animations/truck.png" alt="Delivery Truck" class="truck-img" id="truck-img">
+              <img src="asset/bg animations/tire.png" alt="Tire Front" class="truck-tire tire-front" id="tire-front">
+              <img src="asset/bg animations/tire.png" alt="Tire Rear" class="truck-tire tire-rear" id="tire-rear">
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Ordering -->
+        <div class="guarantee-col right-col">
+          <h3 class="guarantee-title-small reveal reveal-right">Seamless Wholesale Ordering</h3>
+          <p class="guarantee-desc reveal reveal-right delay-100">
+            Partner with us for consistent stock, flexible delivery times, and premium quality. Our dedicated B2B portal makes reordering effortless for your entire enterprise.
+          </p>
+          <a href="#contact" class="btn btn-primary btn-arrow reveal reveal-right delay-200">
+            Learn More 
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Retail Partners Marquee Strip -->
+  <section class="retail-strip reveal reveal-up">
+    <div class="retail-strip-label">Our products available at</div>
+    <div class="retail-marquee-wrapper">
+      <div class="retail-marquee-track">
+        <span class="retailer-name">Metro Manila Supermarket</span>
+        <span class="retailer-dot">·</span>
+        <span class="retailer-name">Rich &amp; Fresh Supermarket</span>
+        <span class="retailer-dot">·</span>
+        <span class="retailer-name">Millennium Supermarket</span>
+        <span class="retailer-dot">·</span>
+        <span class="retailer-name">Majestic Hypermarket</span>
+        <span class="retailer-dot">·</span>
+        <span class="retailer-name">Grand Majestic Hypermarket</span>
+        <span class="retailer-dot">·</span>
+        <span class="retailer-name">O K Hypermarket</span>
+        <span class="retailer-dot">·</span>
+        <span class="retailer-name">Jas Hypermarket</span>
+        <span class="retailer-dot">·</span>
+        <!-- Duplicate for seamless loop -->
+        <span class="retailer-name">Metro Manila Supermarket</span>
+        <span class="retailer-dot">·</span>
+        <span class="retailer-name">Rich &amp; Fresh Supermarket</span>
+        <span class="retailer-dot">·</span>
+        <span class="retailer-name">Millennium Supermarket</span>
+        <span class="retailer-dot">·</span>
+        <span class="retailer-name">Majestic Hypermarket</span>
+        <span class="retailer-dot">·</span>
+        <span class="retailer-name">Grand Majestic Hypermarket</span>
+        <span class="retailer-dot">·</span>
+        <span class="retailer-name">O K Hypermarket</span>
+        <span class="retailer-dot">·</span>
+        <span class="retailer-name">Jas Hypermarket</span>
+        <span class="retailer-dot">·</span>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="about" class="metrics">
+    <!-- Top Torn Paper Divider -->
+    <div class="custom-shape-divider-top">
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="#f0f5f9"></path>
+        <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="#f0f5f9"></path>
+        <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="#f0f5f9"></path>
+      </svg>
+    </div>
+
+    <div class="container">
+      <div class="section-header">
+        <span class="section-subtitle reveal reveal-up">Blizz by the Numbers</span>
+        <h2 class="section-title reveal reveal-up delay-100">UAE's Trusted Supplier of Commercial Cleaning Solutions</h2>
+      </div>
+      
+      <div class="metrics-grid">
+        <div class="metric-card reveal reveal-scale delay-100">
+          <div class="metric-number">50+</div>
+          <div class="metric-label">High-Tier Formulas</div>
+          <p class="metric-desc">Concentrated, industry-grade detergents, disinfectants, and specialized B2B sanitizers.</p>
+        </div>
+        
+        <div class="metric-card reveal reveal-scale delay-200">
+          <div class="metric-number">10K+</div>
+          <div class="metric-label">Tons Annual Capacity</div>
+          <p class="metric-desc">State-of-the-art chemical blending and packaging facilities serving the Middle East.</p>
+        </div>
+        
+        <div class="metric-card reveal reveal-scale delay-300">
+          <div class="metric-number">500+</div>
+          <div class="metric-label">Corporate Clients</div>
+          <p class="metric-desc">Supplying hotels, hospital groups, facility management firms, and cleaning companies.</p>
+        </div>
+        
+        <div class="metric-card reveal reveal-scale delay-400">
+          <div class="metric-number">100%</div>
+          <div class="metric-label">Manufactured in UAE</div>
+          <p class="metric-desc">Formulated locally to match the unique environmental standards of the region.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Torn Paper Divider -->
+    <div class="custom-shape-divider-bottom">
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="#f0f5f9"></path>
+        <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="#f0f5f9"></path>
+        <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="#f0f5f9"></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Why Choose Us Section -->
+  <section class="why-us">
+    <div class="container">
+      <div class="why-us-body">
+
+        <!-- Top: Header text (Subtitle, Title, Intro) -->
+        <div class="why-us-header">
+          <span class="section-subtitle reveal reveal-up">Why Choose Blizz</span>
+          <h2 class="why-us-title reveal reveal-up delay-100">Built for Business.<br>Trusted Across the UAE.</h2>
+          <p class="why-us-intro reveal reveal-up delay-200">We don't just supply cleaning products — we build long-term supply partnerships with enterprises, hotels, hospitals, and facility operators across the region.</p>
+        </div>
+
+        <!-- Middle (on Mobile) / Left (on PC): Single Image Area -->
+        <div class="why-us-visual reveal reveal-left">
+          <img src="asset/bg images/bg image3.png" alt="Trusted cleaning solutions partnership" class="why-us-img">
+        </div>
+
+        <!-- Bottom (on Mobile) / Right (on PC): Reason List -->
+        <div class="why-reasons">
+
+          <div class="why-reason reveal reveal-right delay-100">
+            <span class="why-reason-num">01</span>
+            <div class="why-reason-text">
+              <h4>ISO-Grade Formulations</h4>
+              <p>Every formula is engineered to strict B2B hygiene standards — no shortcuts, no compromises.</p>
+            </div>
+          </div>
+
+          <div class="why-reason reveal reveal-right delay-200">
+            <span class="why-reason-num">02</span>
+            <div class="why-reason-text">
+              <h4>Guaranteed On-Time Delivery</h4>
+              <p>Bulk orders dispatched and tracked with precision across all UAE emirates.</p>
+            </div>
+          </div>
+
+          <div class="why-reason reveal reveal-right delay-300">
+            <span class="why-reason-num">03</span>
+            <div class="why-reason-text">
+              <h4>Competitive Bulk Pricing</h4>
+              <p>Volume-based contracts and flexible MOQ for businesses of every scale.</p>
+            </div>
+          </div>
+
+          <div class="why-reason reveal reveal-right delay-400">
+            <span class="why-reason-num">04</span>
+            <div class="why-reason-text">
+              <h4>UAE-Made, Eco-Conscious</h4>
+              <p>100% locally manufactured with biodegradable surfactants and recyclable packaging.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Corporate Expertise Section (Reference Layout) -->
+  <section class="expertise">
+    <div class="container">
+      <div class="expertise-wrapper">
+        
+        <!-- Left: Image Collage -->
+        <div class="expertise-image-collage reveal reveal-left">
+          <!-- Main background image -->
+          <img src="asset/others/commercial section/img2.png" alt="Commercial Hygiene Products" class="collage-img-main">
+          <!-- Overlapping foreground image with border -->
+          <img src="asset/others/commercial section/img1.png" alt="Hospital Grade Disinfectant" class="collage-img-front">
+        </div>
+
+        <!-- Right: Content & List -->
+        <div class="expertise-content">
+          <h2 class="section-title reveal reveal-right">Redefining Commercial <br>Hygiene Standards</h2>
+          <span class="section-subtitle green-text reveal reveal-right delay-100">Partner with us for Bulk Supply & Premium Quality</span>
+          
+          <p class="expertise-desc reveal reveal-right delay-200">
+            At Blizz UAE, we focus entirely on engineering the highest-tier chemical formulations for large-scale enterprise use. From advanced laundry detergents that protect commercial textiles, to hospital-grade disinfectants ensuring absolute compliance.
+          </p>
+          <p class="expertise-desc reveal reveal-right delay-300">
+            We partner directly with facility managers and procurement teams across the Middle East to deliver bulk, eco-conscious cleaning solutions that lower operational costs while significantly elevating hygiene standards.
+          </p>
+          <a href="about" class="btn btn-primary btn-arrow reveal reveal-right delay-400" style="margin-top: 1rem;">
+            Discover Our Story
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Inquiry & Contact Section -->
+  <section id="contact" class="inquiry">
+    <div class="container">
+      <div class="inquiry-split">
+
+        <!-- Left: Form -->
+        <div class="inquiry-form-col">
+          <span class="section-subtitle reveal reveal-up">Bulk Orders</span>
+          <h2 class="inquiry-title reveal reveal-up delay-100">Get a Wholesale Quote</h2>
+          <form class="inquiry-form-slim glass-panel reveal reveal-up delay-200" id="inquiry-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="contact-name">Your Name</label>
+                <input type="text" id="contact-name" placeholder="Full Name" required>
+              </div>
+              <div class="form-group">
+                <label for="company-name">Company</label>
+                <input type="text" id="company-name" placeholder="Company Name" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="contact-email">Email</label>
+                <input type="email" id="contact-email" placeholder="you@company.ae" required>
+              </div>
+              <div class="form-group">
+                <label for="contact-phone">Phone</label>
+                <input type="tel" id="contact-phone" placeholder="+971 50 000 0000" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" placeholder="Tell us about your requirements, product interest, and order volumes..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary form-submit-btn">Send Enquiry</button>
+          </form>
+        </div>
+
+        <!-- Right: Contact Info -->
+        <div class="inquiry-info-col">
+          <h3 class="info-col-title reveal reveal-up">Let's Talk Business</h3>
+          <p class="info-col-desc reveal reveal-up delay-100">Reach our wholesale team directly — we respond within 24 hours.</p>
+
+          <div class="inquiry-info-items">
+            <div class="inquiry-info-item reveal reveal-up delay-200">
+              <div class="info-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div>
+                <span class="info-label">Phone</span>
+                <span class="info-value">+971 50 854 6344</span>
+              </div>
+            </div>
+            <div class="inquiry-info-item reveal reveal-up delay-300">
+              <div class="info-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div>
+                <span class="info-label">Email</span>
+                <span class="info-value">Blizzbusinessinfo@gmail.com</span>
+              </div>
+            </div>
+            <div class="inquiry-info-item reveal reveal-up delay-400">
+              <div class="info-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div>
+                <span class="info-label">Location</span>
+                <span class="info-value">Jebel Ali, Dubai, UAE</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- WhatsApp Buttons -->
+          <div class="whatsapp-buttons">
+            <a href="https://wa.me/971508546344" target="_blank" class="whatsapp-btn whatsapp-btn-main">
+              <img src="asset/whatsapp logo.png" alt="WhatsApp" style="width: 20px; height: 20px; object-fit: contain; margin-right: 8px; vertical-align: middle;">
+              Chat with Sales
+            </a>
+            <a href="https://wa.me/971508546344" target="_blank" class="whatsapp-btn whatsapp-btn-outline">
+              <img src="asset/whatsapp logo.png" alt="WhatsApp" style="width: 20px; height: 20px; object-fit: contain; margin-right: 8px; vertical-align: middle;">
+              WhatsApp Support
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Success Modal Overlay -->
+  <div class="modal-overlay" id="success-modal">
+    <div class="modal-content glass-panel">
+      <div class="modal-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3>Enquiry Submitted</h3>
+      <p>Thank you! Your wholesale enquiry has been successfully sent to our Dubai sales office. One of our wholesale managers will review your requirements and reach out to you within 24 hours.</p>
+      <button class="btn btn-primary" id="close-modal-btn">Close Window</button>
+    </div>
+  </div>
+
+  <!-- Product Details Popup Modal -->
+  <div class="modal-overlay" id="product-popup">
+    <div class="modal-content product-popup-content" id="product-popup-card">
+      <button class="popup-close-btn" id="popup-close-btn" aria-label="Close details">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="popup-body">
+        <div class="popup-img-wrapper" id="popup-img-wrapper">
+          <img src="" alt="" class="popup-img" id="popup-img">
+        </div>
+        <div class="popup-info">
+          <span class="popup-badge" id="popup-badge">Popular</span>
+          <h3 class="popup-title" id="popup-title">Product Name</h3>
+          <span class="popup-category" id="popup-category">Category</span>
+          <p class="popup-desc" id="popup-desc">Product description goes here.</p>
+          <div class="popup-packaging" id="popup-packaging">
+            <strong>Packaging:</strong> <span id="popup-packaging-val">20L Canister</span>
+          </div>
+          <div class="popup-actions">
+            <a href="products" class="btn btn-primary popup-action-btn">
+              View Product details
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        
+        <div class="footer-info">
+          <a href="#home" class="logo">
+            <img src="asset/company logo/logo.png" alt="Blizz Logo">
+          </a>
+          <p>Blizz is a leading UAE-based wholesale brand producing top-tier commercial washing liquid, specialized disinfectants, and high-performance industrial hygiene products.</p>
+          <div class="social-links">
+            <a href="#" class="social-icon" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="Facebook">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h4>Product Ranges</h4>
+          <ul class="footer-links">
+            <li><a href="#products">Laundry & Detergents</a></li>
+            <li><a href="#products">Sanitizers & Disinfectants</a></li>
+            <li><a href="#products">Hand & Body Wash</a></li>
+            <li><a href="#products">Surface & Floor Cleaners</a></li>
+            <li><a href="#products">Specialty Wholesale Items</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About Blizz</a></li>
+            <li><a href="#products">Product Catalog</a></li>
+            <li><a href="enquiry">Wholesale Enquiry</a></li>
+            <li><a href="#">B2B Portal Login</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Dubai Headquarters</h4>
+          <div class="footer-contact">
+            <div class="footer-contact-item">
+              <div class="footer-contact-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <span>Industrial Area 3, Jebel Ali, Dubai, UAE</span>
+            </div>
+            <div class="footer-contact-item">
+              <div class="footer-contact-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <span>+971 50 854 6344</span>
+            </div>
+            <div class="footer-contact-item">
+              <div class="footer-contact-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <span>Blizzbusinessinfo@gmail.com</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blizz UAE (Blizz Wholesale Cleaning Brand). All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="terms-of-sale">Terms of Sale</a>
+          <a href="privacy-policy">Privacy Policy</a>
+          <a href="sitemap">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/971508546344" target="_blank" class="floating-whatsapp-btn" aria-label="Chat on WhatsApp">
+    <img src="asset/whatsapp logo.png" alt="WhatsApp Logo">
+  </a>
+
+  <script src="app.js?v=26"></script>
+</body>
+</html>

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Blog Insight | Blizz UAE</title>
+  <meta name="description" content="Explore Blizz UAE detailed blog insights, hygiene tips, commercial laundry practices, and wholesale updates.">
+  <link rel="stylesheet" href="style.css?v=117">
+  <style>
+    /* Premium styles for Wide Layout Blog Single Page */
+    .blog-single-post-section {
+      padding: 3rem 0 6rem;
+      background: #ffffff;
+    }
+
+    .blog-post-container {
+      max-width: 1280px; /* Match standard corporate width */
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .blog-navigation {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.5rem;
+      font-size: 0.95rem;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 1.5rem;
+    }
+
+    .blog-navigation .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #dc2626; /* Brand Red */
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .blog-navigation .back-link svg {
+      transition: transform 0.2s ease;
+    }
+
+    .blog-navigation .back-link:hover {
+      color: #991b1b;
+    }
+
+    .blog-navigation .back-link:hover svg {
+      transform: translateX(-4px);
+    }
+
+    .post-breadcrumbs {
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .post-breadcrumbs a {
+      color: #64748b;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .post-breadcrumbs a:hover {
+      color: #dc2626;
+    }
+
+    .post-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .post-meta-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.95rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    .post-category-tag {
+      color: #dc2626;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .post-meta-separator {
+      color: #cbd5e1;
+    }
+
+    .post-title-main {
+      font-size: 3.25rem;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.2;
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+
+    .post-hero-image-wrapper {
+      width: 100%;
+      aspect-ratio: 21 / 9; /* Sleek horizontal ratio on desktop */
+      border-radius: 1.25rem;
+      overflow: hidden;
+      box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.08);
+      margin-bottom: 3.5rem;
+      background: #f1f5f9;
+    }
+
+    .post-hero-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .post-hero-image-wrapper:hover img {
+      transform: scale(1.02);
+    }
+
+    .post-body-content-area {
+      color: #334155;
+      font-size: 1.15rem;
+      line-height: 1.9;
+      max-width: 1100px; /* Spacious reading area, reduced margins */
+    }
+
+    .post-body-content-area p {
+      margin-bottom: 1.85rem;
+    }
+
+    .post-body-content-area .lead-text {
+      font-size: 1.35rem;
+      color: #0f172a;
+      line-height: 1.8;
+      font-weight: 500;
+      margin-bottom: 2.25rem;
+      border-left: 4px solid #dc2626;
+      padding-left: 1.5rem;
+    }
+
+    .post-body-content-area h2 {
+      font-size: 2rem;
+      color: #0f172a;
+      margin-top: 3.5rem;
+      margin-bottom: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+
+    .post-body-content-area h3 {
+      font-size: 1.5rem;
+      color: #0f172a;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .post-body-content-area ul, .post-body-content-area ol {
+      margin-bottom: 1.85rem;
+      padding-left: 1.75rem;
+    }
+
+    .post-body-content-area li {
+      margin-bottom: 0.85rem;
+    }
+
+    .post-body-content-area li strong {
+      color: #0f172a;
+    }
+
+    /* Read Next / Related Section */
+    .more-articles {
+      padding: 6rem 0;
+      background: #f8fafc;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    .more-articles-title {
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 3rem;
+      text-align: center;
+      letter-spacing: -0.02em;
+    }
+
+    .more-articles-grid {
+      grid-template-columns: repeat(2, 1fr);
+      max-width: 1280px;
+      margin: 0 auto;
+      gap: 3rem;
+    }
+
+    /* Desktop, Tablet, and Mobile responsiveness */
+    @media (max-width: 1024px) {
+      .post-title-main {
+        font-size: 2.75rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .blog-single-post-section {
+        padding: 2rem 0 4rem;
+      }
+
+      .blog-navigation {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        margin-bottom: 2rem;
+      }
+
+      .post-title-main {
+        font-size: 2.25rem;
+      }
+
+      .post-hero-image-wrapper {
+        aspect-ratio: 16 / 9; /* More standard landscape ratio on smaller views */
+        margin-bottom: 2.5rem;
+      }
+
+      .post-body-content-area {
+        font-size: 1.08rem;
+      }
+
+      .post-body-content-area .lead-text {
+        font-size: 1.2rem;
+        padding-left: 1rem;
+      }
+
+      .post-body-content-area h2 {
+        font-size: 1.75rem;
+        margin-top: 2.5rem;
+      }
+
+      .more-articles-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 0 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Detailed Blog Post Article -->
+  <section class="blog-single-post-section">
+    <article class="blog-post-container">
+      
+      <!-- Top Navigation & Breadcrumbs -->
+      <div class="blog-navigation">
+        <a href="blog" class="back-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Back to Blog
+        </a>
+        <div class="post-breadcrumbs">
+          <a href="/">Home</a> / <a href="blog">Blog</a> / <span id="breadcrumb-post-title">Article</span>
+        </div>
+      </div>
+
+      <!-- Integrated Header Block -->
+      <div class="post-header">
+        <div class="post-meta-info">
+          <span class="post-category-tag" id="post-category">Category</span>
+          <span class="post-meta-separator">•</span>
+          <span class="post-date" id="post-date">Publication Date</span>
+        </div>
+        <h1 class="post-title-main" id="post-title">Loading Article...</h1>
+      </div>
+
+      <!-- Dynamic Cover Image Area (No static asset image src - added via JS from admin/database) -->
+      <div class="post-hero-image-wrapper">
+        <img id="post-image" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 21 9' fill='%23f1f5f9'%3E%3C/svg%3E" alt="Blog Feature Banner">
+      </div>
+
+      <!-- Content Area -->
+      <div class="post-body-content-area" id="post-body">
+        <p class="lead-text">Loading the post details...</p>
+      </div>
+
+    </article>
+  </section>
+
+  <!-- Read Next / Related Posts Section -->
+  <section class="more-articles">
+    <div class="container">
+      <h2 class="more-articles-title">Read Next</h2>
+      <div class="blog-bento-grid more-articles-grid" id="related-posts-grid">
+        <!-- Dynamically populated related posts go here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer (Unified Corporate Class Styling) -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-info">
+          <a href="/" class="logo">
+            <img src="asset/company logo/logo.png" alt="Blizz Logo">
+          </a>
+          <p>Blizz is a leading UAE-based wholesale brand producing top-tier commercial washing liquid, specialized disinfectants, and high-performance industrial hygiene products.</p>
+          <div class="social-links">
+            <a href="#" class="social-icon" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="Facebook">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h4>Product Ranges</h4>
+          <ul class="footer-links">
+            <li><a href="products">Laundry & Detergents</a></li>
+            <li><a href="products">Sanitizers & Disinfectants</a></li>
+            <li><a href="products">Hand & Body Wash</a></li>
+            <li><a href="products">Surface & Floor Cleaners</a></li>
+            <li><a href="products">Specialty Wholesale Items</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="about">About Blizz</a></li>
+            <li><a href="products">Product Catalog</a></li>
+            <li><a href="enquiry">Wholesale Enquiry</a></li>
+            <li><a href="#">B2B Portal Login</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Dubai Headquarters</h4>
+          <div class="footer-contact">
+            <div class="footer-contact-item">
+              <div class="footer-contact-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <span>Industrial Area 3, Jebel Ali, Dubai, UAE</span>
+            </div>
+            <div class="footer-contact-item">
+              <div class="footer-contact-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <span>+971 50 854 6344</span>
+            </div>
+            <div class="footer-contact-item">
+              <div class="footer-contact-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <span>Blizzbusinessinfo@gmail.com</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blizz UAE (Blizz Wholesale Cleaning Brand). All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="terms-of-sale">Terms of Sale</a>
+          <a href="privacy-policy">Privacy Policy</a>
+          <a href="sitemap">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js?v=26"></script>
+  
+  <script>
+    // 5 standard blog fallback models
+    const fallbackBlogs = [
+      {
+        slug: "future-of-bulk-laundry",
+        title: "The Future of Bulk Laundry: Why High-Concentrate Liquids Are Taking Over Hotels",
+        category: "Industry News",
+        date: "2026-06-24",
+        excerpt: "Explore the cost-saving benefits and environmental impact of switching your hospitality business to high-concentrate liquid detergents.",
+        image: "asset/products/liquid detergent 4kg ocean.png",
+        content: `
+          <p class="lead-text">As the hospitality sector in the UAE continues its rapid expansion, the operational demands on large-scale laundries are pushing the boundaries of traditional cleaning solutions. The shift towards high-concentrate liquid detergents is no longer just a trend—it's a critical operational upgrade.</p>
+          <h2>The Cost of Inefficiency</h2>
+          <p>Traditional detergent powders have long been the staple of commercial laundries. However, as water scarcity and energy costs rise across the GCC, the hidden inefficiencies of powder—from incomplete dissolution in colder water cycles to the sheer volume of packaging waste—are forcing procurement managers to look for alternatives.</p>
+          <p>High-concentrate liquids, such as Blizz's newly reformulated Ocean breeze series, offer a dramatic reduction in dosing requirements. A standard 4kg container of our ultra-concentrated formula can yield up to 30% more washes than equivalent standard powders, significantly lowering the cost-per-wash matrix.</p>
+          <h2>Environmental and Operational Impact</h2>
+          <p>Beyond cost, the environmental footprint is a growing concern for eco-certified hotels. Concentrated liquids require less water during the manufacturing process, smaller plastic packaging due to reduced volume, and lower transportation emissions.</p>
+          <ul>
+            <li><strong>Lower Temperature Efficacy:</strong> Advanced enzymes in liquid formulas activate at lower temperatures, saving on heating costs.</li>
+            <li><strong>Fabric Longevity:</strong> The absence of harsh, undissolved abrasive particles extends the lifespan of expensive hotel linens.</li>
+            <li><strong>Automated Dosing:</strong> Liquids seamlessly integrate into automated dosing systems, eliminating human error and product wastage.</li>
+          </ul>
+          <h2>Looking Ahead to 2027</h2>
+          <p>As we approach 2027, the standard for commercial laundry is set to be redefined. Hotels that transition to high-concentrate liquids today are not only safeguarding their operational budgets against future supply chain shocks but are also aligning with the sustainable tourism initiatives driven by the UAE government.</p>
+        `
+      },
+      {
+        slug: "hospital-grade-floor-cleaning",
+        title: "Hospital-Grade Floor Cleaning: Best Practices for 2026",
+        category: "Hygiene Standards",
+        date: "2026-06-18",
+        excerpt: "Discover high standards and guidelines for sanitizing floors in medical complexes, warehouses, and hospitality structures.",
+        image: "asset/products/floor cleaner.png",
+        content: `
+          <p class="lead-text">Maintaining clean floors in healthcare and public facilities is a primary defense against pathogens. Hospital-grade sanitization protocols demand specialized detergents and techniques to ensure maximum safety.</p>
+          <h2>The Role of Disinfectants</h2>
+          <p>Standard household floor cleaners are insufficient for facilities handling clinical environments. Using disinfectants containing active agents like benzalkonium chloride or sodium hypochlorite ensures that surface-bound bacteria and viruses are actively eliminated.</p>
+          <h2>Standard Operating Procedures</h2>
+          <p>A structured approach is vital to maintain consistent sanitization:</p>
+          <ul>
+            <li><strong>Pre-sweeping:</strong> Debris must be removed to avoid neutralizing the active chemical sanitizers.</li>
+            <li><strong>Dilution Precision:</strong> Incorrect dilutions can leave sticky residues or fail to kill bacteria.</li>
+            <li><strong>Contact Time:</strong> The solution must remain wet on the surface for at least 5-10 minutes.</li>
+          </ul>
+        `
+      },
+      {
+        slug: "psychology-of-scent-hand-wash",
+        title: "The Psychology of Scent: Why Pearl Hand Wash Increases Customer Satisfaction",
+        category: "Product Spotlight",
+        date: "2026-06-10",
+        excerpt: "Learn how scent branding boosts overall consumer appreciation and shapes operational sanitation benchmarks.",
+        image: "asset/products/hand wash liq.png",
+        content: `
+          <p class="lead-text">A pleasant scent is more than just a nice addition; it actively shapes user perception of cleanliness and luxury. Premium pearl hand wash solutions help businesses build stronger brand loyalty.</p>
+          <h2>First Impressions Count</h2>
+          <p>When guests visit a washroom, they make immediate subconscious judgments about the hygiene standards of the entire establishment. A high-quality, delicately scented hand soap elevates that experience, signaling professionalism and care.</p>
+          <h2>Formulated for Skin Health</h2>
+          <p>Our Pearl hand washes are enriched with skin conditioners to prevent dryness even with frequent washing. This combination of functionality and aesthetic appeal makes it a favorite for hotels, corporate offices, and premium restaurants.</p>
+        `
+      },
+      {
+        slug: "streak-free-glass-cleaning",
+        title: "Streak-Free Commercial Glass Cleaning at Scale",
+        category: "Tips & Tricks",
+        date: "2026-06-02",
+        excerpt: "Avoid common streaks and clean bulk exterior window arrays with industrial strength glass cleaning formulas.",
+        image: "asset/products/glass cleaner.png",
+        content: `
+          <p class="lead-text">Cleaning glass surfaces on high-rise buildings and storefronts requires products that evaporate cleanly without leaving mineral residues or stripes.</p>
+          <h2>Why Ordinary Soap Fails</h2>
+          <p>Using generic soap formulas leaves a surfactant film that attracts dust and shows streaks under direct sunlight. Professional glass cleaners use fast-evaporating solvents and demineralized bases to ensure an invisible finish.</p>
+        `
+      },
+      {
+        slug: "optimizing-detergent-powder-inventory",
+        title: "Optimizing Your Detergent Powder Inventory for Q3",
+        category: "Supply Chain",
+        date: "2026-05-28",
+        excerpt: "Ensure peak efficiency and order frequency patterns match local supply timelines.",
+        image: "asset/produt page/detergent_powder_2.5kg.png",
+        content: `
+          <p class="lead-text">Effective stock management for heavy-duty laundry supplies ensures constant operations without tied-up capital. Learn how to plan your bulk orders for the upcoming quarter.</p>
+          <h2>Demand Forecasting</h2>
+          <p>Analyze your wash cycles and seasonal occupancy rates to establish exact powder demand. Ordering in bulk palleted cycles minimizes transport overhead and secures quantity discounts from manufacturers.</p>
+        `
+      }
+    ];
+
+    async function loadBlogPost() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const slug = urlParams.get('slug') || "future-of-bulk-laundry";
+      
+      let postData = null;
+      let allPosts = [];
+
+      try {
+        // Try fetching active blog details from live database
+        const res = await fetch(`/api/blog/slug/${slug}`);
+        if (res.ok) {
+          postData = await res.json();
+        }
+        
+        // Try fetching all blogs for the "Read Next" section
+        const listRes = await fetch('/api/blog');
+        if (listRes.ok) {
+          allPosts = await listRes.json();
+        }
+      } catch (err) {
+        console.warn("Using offline fallback data for blog post details.", err);
+      }
+
+      // Fallback mapping if database call failed or post not found
+      if (!postData) {
+        postData = fallbackBlogs.find(b => b.slug === slug) || fallbackBlogs[0];
+      }
+      
+      if (allPosts.length === 0) {
+        allPosts = fallbackBlogs;
+      }
+
+      // Update Page Content
+      document.title = `${postData.title} | Blizz UAE Blog`;
+      document.getElementById('breadcrumb-post-title').textContent = postData.title;
+      document.getElementById('post-title').textContent = postData.title;
+      document.getElementById('post-category').textContent = postData.category;
+      
+      const formattedDate = new Date(postData.date).toLocaleDateString('en-US', {
+        year: 'numeric', month: 'long', day: 'numeric'
+      });
+      document.getElementById('post-date').textContent = formattedDate;
+      document.getElementById('post-image').src = postData.image || '';
+      document.getElementById('post-image').alt = postData.title;
+      document.getElementById('post-body').innerHTML = postData.content || postData.body || `<p>${postData.excerpt}</p>`;
+
+      // Populate "Read Next" / Related section
+      const relatedGrid = document.getElementById('related-posts-grid');
+      relatedGrid.innerHTML = '';
+      
+      // Filter out current post, pick maximum 2 related posts
+      const relatedPosts = allPosts.filter(p => p.slug !== slug).slice(0, 2);
+      
+      relatedPosts.forEach(post => {
+        const itemDate = new Date(post.date).toLocaleDateString('en-US', {
+          year: 'numeric', month: 'long', day: 'numeric'
+        });
+        
+        const card = document.createElement('a');
+        card.href = `blog-single?slug=${post.slug}`;
+        card.className = 'blog-card standard-blog';
+        card.innerHTML = `
+          <div class="blog-img-wrapper">
+            <img src="${post.image}" alt="${post.title}">
+          </div>
+          <div class="blog-content">
+            <div class="blog-meta">
+              <span class="blog-category">${post.category}</span>
+              <span class="blog-date">${itemDate}</span>
+            </div>
+            <h3 class="blog-title">${post.title}</h3>
+          </div>
+        `;
+        relatedGrid.appendChild(card);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', loadBlogPost);
+  </script>
+</body>
+</html>

@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Our Products | Premium Wholesale Cleaning Supplies | Blizz UAE</title>
+  <meta name="description" content="Explore Blizz UAE's premium range of wholesale commercial detergents, disinfectants, and industrial hygiene products designed for scale and excellence.">
+    <link rel="stylesheet" href="style.css?v=160">
+  <style>
+    /* Product Page Hero Section */
+
+    .catalog-hero {
+
+      position: relative;
+
+      overflow: hidden;
+
+      padding: calc(var(--header-height, 70px) + 4.5rem) 0 7rem;
+
+      background: #fff; /* Fallback flat color, video renders on top */
+
+      background-size: cover;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: flex-start;
+
+      min-height: 600px;
+
+      text-align: left;
+
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .hero-video-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      display: block;
+    }
+
+    .hero-video-bg.mobile-video {
+      display: none;
+    }
+
+    .hero-video-bg.pc-video {
+      display: block;
+      object-position: center bottom;
+      transform: scaleX(-1);
+    }
+
+    .hero-video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.85) 45%, rgba(255, 255, 255, 0) 100%);
+      z-index: 2;
+      pointer-events: none;
+      display: block;
+
+    }
+
+
+
+    .catalog-hero-container {
+
+      position: relative;
+
+      z-index: 10;
+
+      max-width: 1280px; /* Match standard corporate width */
+
+      margin: 0 auto;
+
+      width: 100%;
+
+      padding: 0 2rem;
+
+    }
+
+
+
+    .catalog-hero-title {
+
+      font-family: var(--font-heading-serif);
+
+      font-size: 3.75rem;
+
+      color: #0f172a;
+
+      margin-bottom: 2.5rem;
+
+      line-height: 1.15;
+
+      max-width: 700px;
+
+    }
+
+
+
+    .catalog-hero-desc {
+
+      font-size: 1.25rem;
+
+      color: #334155;
+
+      line-height: 1.7;
+
+      max-width: 650px;
+
+    }
+
+
+
+    /* Mobile View Optimization */
+
+    @media (max-width: 767px) {
+
+      .catalog-hero {
+
+        min-height: 580px;
+
+        padding: calc(var(--header-height, 70px) + 6rem) 0 6rem;
+
+        background: linear-gradient(to right, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.9) 70%, rgba(255, 255, 255, 0.3) 100%), url('asset/produt page/hero bg for mobile view.png') no-repeat center center;
+
+        background-size: cover;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: flex-start;
+        text-align: left;
+      }
+      .hero-video-bg.pc-video {
+        display: none !important;
+      }
+      .hero-video-bg.mobile-video {
+        display: block !important;
+      }
+      .hero-video-overlay {
+        display: block !important;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.9) 70%, rgba(255, 255, 255, 0.3) 100%) !important;
+      }
+
+      .catalog-hero-container {
+        margin: 0;
+        width: 100%;
+
+        padding: 0 1.5rem;
+
+        text-align: left;
+
+      }
+
+      .catalog-hero-title {
+
+        font-size: 2.15rem;
+
+        line-height: 1.2;
+
+        margin-bottom: 0.75rem;
+
+        max-width: 100%;
+
+      }
+
+      .catalog-hero-desc {
+
+        font-size: 1.05rem;
+
+        line-height: 1.6;
+
+        max-width: 100%;
+
+      }
+
+    }
+    
+    /* Product Order Modal Styling */
+    .product-order-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .product-order-modal.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal-backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(8px);
+    }
+    .modal-container {
+      position: relative;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 24px;
+      width: 95%;
+      max-width: 580px;
+      padding: 2.5rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      transform: scale(0.9);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 10;
+    }
+    .product-order-modal.active .modal-container {
+      transform: scale(1);
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: rgba(0, 0, 0, 0.05);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: #64748b;
+      transition: all 0.2s;
+    }
+    .modal-close-btn:hover {
+      background: rgba(0, 0, 0, 0.1);
+      color: #0f172a;
+    }
+    .modal-product-details {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+    .modal-product-image-wrapper {
+      flex: 1;
+      max-width: 200px;
+      height: 200px;
+      background: #f8fafc;
+      border-radius: 16px;
+      border: 1px solid rgba(0,0,0,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-product-image-wrapper img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    .modal-product-info {
+      flex: 1.2;
+      display: flex;
+      flex-direction: column;
+    }
+    .modal-product-info h3 {
+      font-family: var(--font-heading-serif, serif);
+      font-size: 1.6rem;
+      color: #0f172a;
+      margin: 0 0 0.25rem 0;
+      line-height: 1.2;
+    }
+    .modal-product-subtitle {
+      font-size: 0.9rem;
+      color: #64748b;
+      margin: 0 0 1rem 0;
+    }
+    .modal-product-price {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #0f172a;
+      margin-bottom: 1.25rem;
+    }
+    .quantity-selector-container {
+      margin-bottom: 1.25rem;
+    }
+    .quantity-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .quantity-controls {
+      display: inline-flex;
+      align-items: center;
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 0.25rem;
+    }
+    .qty-btn {
+      background: transparent;
+      border: none;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.15rem;
+      font-weight: bold;
+      color: #475569;
+      transition: all 0.2s;
+    }
+    .qty-btn:hover {
+      background: #e2e8f0;
+      border-radius: 6px;
+      color: #0f172a;
+    }
+    #order-quantity {
+      width: 48px;
+      text-align: center;
+      border: none;
+      background: transparent;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #0f172a;
+      outline: none;
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    .modal-total-price {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 1.5rem;
+      border-top: 1px dashed rgba(0,0,0,0.1);
+      padding-top: 1rem;
+    }
+    .whatsapp-order-submit-btn {
+      background: #16a34a;
+      color: white;
+      border: none;
+      padding: 0.85rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2);
+      width: 100%;
+    }
+    .whatsapp-order-submit-btn:hover {
+      background: #15803d;
+      box-shadow: 0 6px 16px rgba(22, 163, 74, 0.3);
+      transform: translateY(-1px);
+    }
+    .whatsapp-order-submit-btn:active {
+      transform: translateY(0);
+    }
+    
+    @media (max-width: 580px) {
+      .modal-container {
+        padding: 1.5rem 1.25rem;
+        width: 92%;
+        max-width: 350px;
+      }
+      .modal-product-details {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        text-align: center;
+      }
+      .modal-product-image-wrapper {
+        max-width: 120px;
+        height: 120px;
+        padding: 0.5rem;
+      }
+      .modal-product-info {
+        align-items: center;
+        width: 100%;
+      }
+      .modal-product-info h3 {
+        font-size: 1.25rem;
+      }
+      .modal-product-subtitle {
+        font-size: 0.8rem;
+        margin-bottom: 0.5rem;
+      }
+      .modal-product-price {
+        font-size: 1.1rem;
+        margin-bottom: 0.75rem;
+      }
+      .quantity-selector-container {
+        margin-bottom: 0.75rem;
+        gap: 0.5rem;
+      }
+      .quantity-label {
+        font-size: 0.8rem;
+      }
+      .quantity-controls {
+        margin: 0 auto;
+        gap: 0.25rem;
+      }
+      .qty-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 0.9rem;
+      }
+      #order-quantity {
+        width: 40px;
+        font-size: 0.9rem;
+      }
+      .modal-total-price {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+      }
+      .whatsapp-order-submit-btn {
+        padding: 0.65rem 1.25rem;
+        font-size: 0.9rem;
+      }
+    }
+    .card-rating .star-filled {
+      color: #fbbf24;
+    }
+    .card-rating .star-empty {
+      color: #cbd5e1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header id="header">
+    <div class="container">
+      <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle menu">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+      <a href="/" class="logo header-logo">
+        <img src="asset/company logo/logo.png" alt="Blizz Logo">
+      </a>
+      <div class="nav-right-glass">
+        <nav>
+          <ul>
+            <li><a href="/" class="nav-link" data-sec="home">Home</a></li>
+            <li><a href="about" class="nav-link" data-sec="about">About Us</a></li>
+            <li><a href="products" class="nav-link active" data-sec="products">Products</a></li>
+            <li><a href="blog" class="nav-link" data-sec="blog">Blog</a></li>
+            <li><a href="enquiry" class="nav-link" data-sec="contact">Enquiry</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+    <!-- Classic Catalog Hero Section -->
+
+  <section class="catalog-hero">
+    <!-- Video backgrounds -->
+    <video class="hero-video-bg pc-video" autoplay muted loop playsinline>
+      <source src="asset/produt page/product pc  hero section bg.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <video class="hero-video-bg mobile-video" autoplay muted loop playsinline>
+      <source src="asset/produt page/mobile  hero  section.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <!-- Overlay/gradient to ensure text remains readable and blends nicely -->
+    <div class="hero-video-overlay"></div>
+
+    <div class="container catalog-hero-container">
+      <h1 class="catalog-hero-title reveal reveal-up">Engineered for Purity,<br>Designed for Scale</h1>
+      <p class="catalog-hero-desc reveal reveal-up delay-100">Explore Blizz's premium wholesale portfolio of high-performance commercial detergents, sanitizers, and specialty cleaners crafted for the hospitality and industrial sectors across the UAE.</p>
+    </div>
+  </section>
+
+  <!-- Products Section 2: Zig Zag Layout -->
+  <!-- Products Section 2: Catalog Grid Layout -->
+  <section class="products-catalog-section" id="catalog-list">
+    <div class="container catalog-container">
+      
+      <div class="catalog-header">
+        <h2 class="catalog-title reveal reveal-up">WHOLESALE BULK SUPPLY</h2>
+      </div>
+
+      <!-- Catalog Grid -->
+      <div class="catalog-items-grid" id="catalog-items-grid">
+        <!-- Dynamically rendered products will go here -->
+      </div>
+      
+      <script>
+        async function fetchProducts() {
+          const grid = document.getElementById('catalog-items-grid');
+          try {
+            const res = await fetch('/api/products');
+            if (!res.ok) throw new Error('API down');
+            const products = await res.json();
+            
+            if (products.length === 0) {
+              renderDefaultFallback();
+              return;
+            }
+            
+            grid.innerHTML = '';
+            products.forEach((p, index) => {
+              const card = document.createElement('div');
+              card.className = 'catalog-card reveal reveal-up' + (index >= 8 ? ' hidden' : '');
+              const delayMs = (index % 4) * 100;
+              card.style.transitionDelay = `${delayMs}ms`;
+              
+              const ratingStars = `<span class="star-filled">${'★'.repeat(p.rating)}</span><span class="star-empty">${'☆'.repeat(5 - p.rating)}</span>`;
+              
+              let badgeHtml = '<span></span>';
+              if (p.badge && p.badge !== 'none') {
+                const badgeClass = p.badge === 'soldout' ? 'badge-soldout' : 'badge-discount';
+                badgeHtml = `<span class="badge ${badgeClass}">${p.badgeText || p.badge.toUpperCase()}</span>`;
+              }
+              
+              card.innerHTML = `
+                <div class="card-badges">
+                  ${badgeHtml}
+                  <svg class="heart-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                </div>
+                <div class="card-img-wrapper">
+                  <img src="${p.image || 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%23ccc\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4\'%3E%3C/path%3E%3C/svg%3E'}" alt="${p.name}" style="max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.05));">
+                </div>
+                <div class="card-rating">${ratingStars}</div>
+                <h3 class="card-title">${p.name}</h3>
+                <div class="card-footer">
+                  <div class="card-price">
+                    <span class="price-current">AED ${p.price.toFixed(2)} <span style="font-size:0.65em; color:#94a3b8; font-weight:500;">/ Carton</span></span>
+                    ${p.oldPrice ? `<span class="price-old">AED ${p.oldPrice.toFixed(2)}</span>` : ''}
+                  </div>
+                  <button class="cart-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></button>
+                </div>
+              `;
+              
+              card.addEventListener('click', (e) => {
+                if (e.target.closest('.heart-icon')) {
+                  e.stopPropagation();
+                  const heart = e.target.closest('.heart-icon');
+                  if (heart.getAttribute('fill') === 'none') {
+                    heart.setAttribute('fill', '#ef4444');
+                    heart.setAttribute('stroke', '#ef4444');
+                  } else {
+                    heart.setAttribute('fill', 'none');
+                    heart.setAttribute('stroke', '#ccc');
+                  }
+                  return;
+                }
+                const subtitleParts = [];
+                if (p.quantity && p.unit) subtitleParts.push(`${p.quantity} ${p.unit}`);
+                if (p.unitPerCarton) subtitleParts.push(`${p.unitPerCarton}/Carton`);
+                if (p.category) subtitleParts.push(`Category: ${p.category}`);
+                
+                openOrderModal({
+                  name: p.name,
+                  price: p.price,
+                  image: p.image,
+                  subtitle: subtitleParts.join(' • ') || 'Premium Wholesale Chemical'
+                });
+              });
+
+              grid.appendChild(card);
+            });
+            
+            // Re-setup view more button behavior
+            setupViewMore();
+            if (typeof initScrollReveal === 'function') {
+              initScrollReveal();
+            }
+            
+          } catch(err) {
+            console.warn("Unable to connect to live API database, rendering static backup items.", err);
+            renderDefaultFallback();
+          }
+        }
+        
+        function renderDefaultFallback() {
+          const grid = document.getElementById('catalog-items-grid');
+          const fallbackData = [
+            { name: "Blizz Detergent Powder 2.5kg", price: 24, oldPrice: 27, rating: 4, badge: "discount", badgeText: "⚡ -11%", image: "asset/produt page/detergent_powder_2.5kg.png" },
+            { name: "Liquid Detergent Ocean 4kg", price: 32, oldPrice: null, rating: 5, badge: "soldout", badgeText: "SOLD OUT", image: "asset/products/liquid detergent 4kg ocean.png" },
+            { name: "Dishwash Liquid Lemon 1L", price: 8, oldPrice: null, rating: 3, badge: "none", badgeText: "", image: "asset/products/dishwash 1litr lemon.png" },
+            { name: "Antiseptic Disinfectant 1L", price: 15, oldPrice: null, rating: 5, badge: "none", badgeText: "", image: "asset/produt page/antiseptic disinfectant.png" },
+            { name: "Floor Cleaner Lavender 1L", price: 12, oldPrice: null, rating: 4, badge: "none", badgeText: "", image: "asset/products/floor cleaner.png" },
+            { name: "Glass Cleaner Spray 500ml", price: 9, oldPrice: 10, rating: 5, badge: "discount", badgeText: "⚡ -10%", image: "asset/products/glass cleaner.png" },
+            { name: "Hand Wash Liquid Pearl 500ml", price: 14, oldPrice: null, rating: 2, badge: "soldout", badgeText: "SOLD OUT", image: "asset/products/hand wash liq.png" },
+            { name: "Fabric Softener Floral Pink 2L", price: 18, oldPrice: null, rating: 5, badge: "none", badgeText: "", image: "asset/products/fabric softner floral pink.png" },
+            { name: "Laundry Liquid Lavender 4kg", price: 28, oldPrice: null, rating: 5, badge: "discount", badgeText: "⚡ Popular", image: "asset/products/liquid detergent 4kg lavender.png" },
+            { name: "Fabric Softener Sandal Green 2L", price: 18, oldPrice: null, rating: 4, badge: "none", badgeText: "", image: "asset/products/fabric softner floral green.png" },
+            { name: "Dishwash Liquid Green Apple 1L", price: 8, oldPrice: null, rating: 4, badge: "discount", badgeText: "⚡ New", image: "asset/products/dish wash 1litr green apple.png" },
+            { name: "Dishwash Liquid Strawberry 1L", price: 8, oldPrice: null, rating: 5, badge: "none", badgeText: "", image: "asset/products/dishwash 1litr strawberry.png" }
+          ];
+          
+          grid.innerHTML = '';
+          fallbackData.forEach((p, index) => {
+            const card = document.createElement('div');
+            card.className = 'catalog-card reveal reveal-up' + (index >= 8 ? ' hidden' : '');
+            const delayMs = (index % 4) * 100;
+            card.style.transitionDelay = `${delayMs}ms`;
+            
+            const ratingStars = `<span class="star-filled">${'★'.repeat(p.rating)}</span><span class="star-empty">${'☆'.repeat(5 - p.rating)}</span>`;
+            
+            let badgeHtml = '<span></span>';
+            if (p.badge && p.badge !== 'none') {
+              const badgeClass = p.badge === 'soldout' ? 'badge-soldout' : 'badge-discount';
+              badgeHtml = `<span class="badge ${badgeClass}">${p.badgeText}</span>`;
+            }
+            
+            card.innerHTML = `
+              <div class="card-badges">
+                ${badgeHtml}
+                <svg class="heart-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </div>
+              <div class="card-img-wrapper">
+                <img src="${p.image}" alt="${p.name}" style="max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.05));">
+              </div>
+              <div class="card-rating">${ratingStars}</div>
+              <h3 class="card-title">${p.name}</h3>
+              <div class="card-footer">
+                <div class="card-price">
+                  <span class="price-current">AED ${p.price.toFixed(2)} <span style="font-size:0.65em; color:#94a3b8; font-weight:500;">/ Carton</span></span>
+                  ${p.oldPrice ? `<span class="price-old">AED ${p.oldPrice.toFixed(2)}</span>` : ''}
+                </div>
+                <button class="cart-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></button>
+              </div>
+            `;
+            
+            card.addEventListener('click', (e) => {
+              if (e.target.closest('.heart-icon')) {
+                e.stopPropagation();
+                const heart = e.target.closest('.heart-icon');
+                if (heart.getAttribute('fill') === 'none') {
+                  heart.setAttribute('fill', '#ef4444');
+                  heart.setAttribute('stroke', '#ef4444');
+                } else {
+                  heart.setAttribute('fill', 'none');
+                  heart.setAttribute('stroke', '#ccc');
+                }
+                return;
+              }
+              openOrderModal({
+                name: p.name,
+                price: p.price,
+                image: p.image,
+                subtitle: `Standard Carton / Rating: ${p.rating} Stars`
+              });
+            });
+
+            grid.appendChild(card);
+          });
+          setupViewMore();
+          if (typeof initScrollReveal === 'function') {
+            initScrollReveal();
+          }
+        }
+
+        function setupViewMore() {
+          const viewMoreBtn = document.getElementById('view-more-btn');
+          if (viewMoreBtn) {
+            viewMoreBtn.onclick = function() {
+              const hiddenCards = document.querySelectorAll('.catalog-card.hidden');
+              hiddenCards.forEach(card => card.classList.remove('hidden'));
+              viewMoreBtn.style.display = 'none';
+              if (typeof initScrollReveal === 'function') {
+                initScrollReveal();
+              }
+            };
+          }
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchProducts);
+      </script>
+
+
+      <!-- View More Container -->
+      <div class="view-more-container" style="margin-bottom: 4rem;">
+        <button class="view-more-btn" id="view-more-btn">
+          View More
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products Section 3: Pill Showcase (Most Sold) -->
+  <section class="products-pill-showcase">
+    <div class="container pill-container" id="pill-container">
+      <!-- Dynamically loaded by script below -->
+    </div>
+  </section>
+
+  <script>
+    // Static fallback data for Most Sold section
+    const MOST_SOLD_FALLBACK = [
+      {
+        title: 'DETERGENT',
+        subtitle: 'BULK PALLET (24 CTN)',
+        price: 768.00,
+        label: 'MOST SOLD',
+        colors: '#9b89b3, #504443, #1a1a1a',
+        image: 'asset/products/liquid detergent 4kg lavender.png'
+      },
+      {
+        title: 'DISHWASH',
+        subtitle: 'BULK PALLET (50 CTN)',
+        price: 400.00,
+        label: 'MOST SOLD',
+        colors: '#8bc34a, #504443, #1a1a1a',
+        image: 'asset/products/dish wash 1litr green apple.png'
+      },
+      {
+        title: 'DISHWASH',
+        subtitle: 'BULK PALLET (50 CTN)',
+        price: 400.00,
+        label: 'MOST SOLD',
+        colors: '#e91e63, #504443, #1a1a1a',
+        image: 'asset/products/dishwash 1litr strawberry.png'
+      }
+    ];
+
+    const DELAY_CLASSES = ['delay-100', 'delay-200', 'delay-300'];
+    let currentMostSoldItems = [];
+
+    function renderPillCard(item, index) {
+      const colorDots = item.colors
+        ? item.colors.split(',').map(c => `<span class="color-dot" style="background: ${c.trim()};"></span>`).join('')
+        : '';
+
+      return `
+        <div class="pill-card reveal reveal-up ${DELAY_CLASSES[index] || ''}" onclick="openMostSoldOrder(${index})" style="cursor: pointer;">
+          <div class="pill-label">${item.label || 'MOST SOLD'}</div>
+          <div class="pill-img-wrapper">
+            <img src="${item.image}" alt="${item.title}" style="max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.1));">
+          </div>
+          <div class="pill-content">
+            <h3 class="pill-title">${item.title}</h3>
+            <span class="pill-subtitle">${item.subtitle}</span>
+            <hr class="pill-divider">
+            <div class="pill-price">AED ${parseFloat(item.price).toFixed(2)}</div>
+            <div class="pill-colors">
+              ${colorDots}
+              <span class="color-text">COLORS</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    async function loadMostSoldSection() {
+      const container = document.getElementById('pill-container');
+      try {
+        const res = await fetch('/api/most-sold');
+        const items = res.ok ? await res.json() : [];
+        currentMostSoldItems = items.length > 0 ? items : MOST_SOLD_FALLBACK;
+        container.innerHTML = currentMostSoldItems.map((item, i) => renderPillCard(item, i)).join('');
+      } catch (err) {
+        currentMostSoldItems = MOST_SOLD_FALLBACK;
+        container.innerHTML = MOST_SOLD_FALLBACK.map((item, i) => renderPillCard(item, i)).join('');
+      }
+      if (typeof initScrollReveal === 'function') initScrollReveal();
+    }
+
+    document.addEventListener('DOMContentLoaded', loadMostSoldSection);
+
+    // Modal Control and WhatsApp Order Scripts
+    let currentProduct = null;
+    let currentQuantity = 1;
+
+    function openMostSoldOrder(index) {
+      const item = currentMostSoldItems[index];
+      if (!item) return;
+      openOrderModal({
+        name: item.title,
+        price: parseFloat(item.price) || 0,
+        image: item.image,
+        subtitle: item.subtitle || 'Most Sold Product'
+      });
+    }
+
+    function openOrderModal(product) {
+      currentProduct = product;
+      currentQuantity = 1;
+      
+      document.getElementById('modal-product-image').src = product.image || 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%23ccc\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4\'%3E%3C/path%3E%3C/svg%3E';
+      document.getElementById('modal-product-title').textContent = product.name;
+      document.getElementById('modal-product-subtitle').textContent = product.subtitle || '';
+      document.getElementById('modal-product-price').textContent = `AED ${product.price.toFixed(2)} / Carton`;
+      document.getElementById('order-quantity').value = currentQuantity;
+      
+      updateModalTotal();
+      
+      document.getElementById('product-order-modal').classList.add('active');
+    }
+
+    function closeOrderModal() {
+      document.getElementById('product-order-modal').classList.remove('active');
+    }
+
+    function adjustOrderQuantity(change) {
+      currentQuantity = Math.max(1, currentQuantity + change);
+      document.getElementById('order-quantity').value = currentQuantity;
+      updateModalTotal();
+    }
+
+    function updateModalTotal() {
+      if (!currentProduct) return;
+      const total = currentProduct.price * currentQuantity;
+      document.getElementById('modal-total-price').textContent = `Total: AED ${total.toFixed(2)}`;
+    }
+
+    function sendWhatsAppOrder() {
+      if (!currentProduct) return;
+      
+      const phoneNumber = '971508546344'; // Corporate WhatsApp
+      const totalPrice = (currentProduct.price * currentQuantity).toFixed(2);
+      
+      const message = `Hello Blizz UAE,
+
+I would like to place a wholesale order for the following product:
+
+*Product Name:* ${currentProduct.name}
+*Details:* ${currentProduct.subtitle || 'N/A'}
+*Unit Price:* AED ${currentProduct.price.toFixed(2)}
+*Quantity:* ${currentQuantity} Carton(s)
+*Total Price:* AED ${totalPrice}
+
+Please confirm availability and procurement/delivery timeline. Thanks!`;
+
+      const encodedMessage = encodeURIComponent(message);
+      const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+      window.open(url, '_blank');
+    }
+  </script>
+
+  <!-- Product Order Modal (WhatsApp) -->
+  <div class="product-order-modal" id="product-order-modal">
+    <div class="modal-backdrop" onclick="closeOrderModal()"></div>
+    <div class="modal-container">
+      <button class="modal-close-btn" onclick="closeOrderModal()">✕</button>
+      <div class="modal-product-details">
+        <div class="modal-product-image-wrapper">
+          <img id="modal-product-image" src="" alt="Product Image">
+        </div>
+        <div class="modal-product-info">
+          <h3 id="modal-product-title">Product Title</h3>
+          <p class="modal-product-subtitle" id="modal-product-subtitle"></p>
+          <div class="modal-product-price" id="modal-product-price">AED 0.00</div>
+          
+          <div class="quantity-selector-container">
+            <span class="quantity-label">Quantity (Cartons):</span>
+            <div class="quantity-controls">
+              <button class="qty-btn" onclick="adjustOrderQuantity(-1)">−</button>
+              <input type="number" id="order-quantity" value="1" min="1" readonly>
+              <button class="qty-btn" onclick="adjustOrderQuantity(1)">+</button>
+            </div>
+          </div>
+          
+          <div class="modal-total-price" id="modal-total-price">
+            Total: AED 0.00
+          </div>
+          
+          <button class="whatsapp-order-submit-btn" onclick="sendWhatsAppOrder()">
+            <img src="asset/whatsapp logo.png" alt="WhatsApp" style="width: 20px; height: 20px; object-fit: contain; margin-right: 8px; vertical-align: middle;">
+            Order via WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-info">
+          <a href="/" class="logo">
+            <img src="asset/company logo/logo.png" alt="Blizz Logo">
+          </a>
+          <p>Blizz is a leading UAE-based wholesale brand producing top-tier commercial washing liquid, specialized disinfectants, and high-performance industrial hygiene products.</p>
+          <div class="social-links">
+            <a href="#" class="social-icon" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="Facebook">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h4>Product Ranges</h4>
+          <ul class="footer-links">
+            <li><a href="products">Laundry & Detergents</a></li>
+            <li><a href="products">Sanitizers & Disinfectants</a></li>
+            <li><a href="products">Hand & Body Wash</a></li>
+            <li><a href="products">Surface & Floor Cleaners</a></li>
+            <li><a href="products">Specialty Wholesale Items</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="about">About Blizz</a></li>
+            <li><a href="products">Product Catalog</a></li>
+            <li><a href="enquiry">Wholesale Enquiry</a></li>
+            <li><a href="#">B2B Portal Login</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Dubai Headquarters</h4>
+          <div class="footer-contact">
+            <div class="footer-contact-item">
+              <div class="footer-contact-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <span>Industrial Area 3, Jebel Ali, Dubai, UAE</span>
+            </div>
+            <div class="footer-contact-item">
+              <div class="footer-contact-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <span>+971 50 854 6344</span>
+            </div>
+            <div class="footer-contact-item">
+              <div class="footer-contact-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <span>Blizzbusinessinfo@gmail.com</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blizz UAE (Blizz Wholesale Cleaning Brand). All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="terms-of-sale">Terms of Sale</a>
+          <a href="privacy-policy">Privacy Policy</a>
+          <a href="sitemap">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js?v=26"></script>
+</body>
+</html>
