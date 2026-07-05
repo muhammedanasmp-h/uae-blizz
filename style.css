@@ -3542,7 +3542,7 @@ footer {
   .expertise-wrapper {
     grid-template-columns: 1fr;
     text-align: center;
-    padding: 3rem 2rem;
+    padding: 3rem 0;
   }
   
   .expertise-image-collage {
@@ -4441,7 +4441,12 @@ footer {
   }
 
   .expertise {
-    padding: 4rem 0;
+    padding: 3rem 0;
+  }
+
+  .expertise .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .expertise-image-collage {
