@@ -664,6 +664,7 @@ function openCollectionModal(item = null) {
   const idInput = document.getElementById('collection-id');
   const nameInput = document.getElementById('collection-name');
   const descInput = document.getElementById('collection-desc');
+  const packagingInput = document.getElementById('collection-packaging');
   const visibleCheck = document.getElementById('collection-visible');
 
   // Reset previews
@@ -679,6 +680,7 @@ function openCollectionModal(item = null) {
     idInput.value = item._id || '';
     nameInput.value = item.name || '';
     descInput.value = item.desc || '';
+    packagingInput.value = item.packaging || '';
     visibleCheck.checked = item.isVisible !== false;
 
     if (item.image) {
@@ -796,6 +798,7 @@ if (collectionForm) {
 
     formData.append('name', document.getElementById('collection-name').value);
     formData.append('desc', document.getElementById('collection-desc').value);
+    formData.append('packaging', document.getElementById('collection-packaging').value);
     formData.append('isVisible', document.getElementById('collection-visible').checked);
     // Send defaults/empties for schema compatibility
     formData.append('price', '0');
@@ -804,7 +807,6 @@ if (collectionForm) {
     formData.append('rating', '5');
     formData.append('badge', 'none');
     formData.append('badgeText', '');
-    formData.append('packaging', '');
 
     const imgFile = document.getElementById('collection-image').files[0];
     if (imgFile) formData.append('image', imgFile);
