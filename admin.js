@@ -274,6 +274,11 @@ async function deleteProduct(id) {
 // Product Form Submission
 document.getElementById('product-form').addEventListener('submit', async (e) => {
   e.preventDefault();
+  const submitBtn = e.target.querySelector('button[type="submit"]');
+  const originalText = submitBtn.innerHTML;
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = `<span class="spinner"></span> Compressing image, please wait...`;
+
   const id = document.getElementById('product-id').value;
   const formData = new FormData();
 
@@ -319,6 +324,9 @@ document.getElementById('product-form').addEventListener('submit', async (e) => 
   } catch (err) {
     console.error(err);
     alert('Something went wrong during product submission.');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalText;
   }
 });
 
@@ -437,6 +445,11 @@ async function deleteBlog(id) {
 // Blog Form Submission
 document.getElementById('blog-form').addEventListener('submit', async (e) => {
   e.preventDefault();
+  const submitBtn = e.target.querySelector('button[type="submit"]');
+  const originalText = submitBtn.innerHTML;
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = `<span class="spinner"></span> Compressing image, please wait...`;
+
   const id = document.getElementById('blog-id').value;
   const formData = new FormData();
 
@@ -472,6 +485,9 @@ document.getElementById('blog-form').addEventListener('submit', async (e) => {
   } catch (err) {
     console.error(err);
     alert('Something went wrong during blog post submission.');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalText;
   }
 });
 
@@ -611,6 +627,11 @@ async function deleteMostSold(id) {
 // Most Sold Form Submission
 document.getElementById('most-sold-form').addEventListener('submit', async (e) => {
   e.preventDefault();
+  const submitBtn = e.target.querySelector('button[type="submit"]');
+  const originalText = submitBtn.innerHTML;
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = `<span class="spinner"></span> Compressing image, please wait...`;
+
   const id = document.getElementById('most-sold-id').value;
   const formData = new FormData();
 
@@ -645,6 +666,9 @@ document.getElementById('most-sold-form').addEventListener('submit', async (e) =
   } catch (err) {
     console.error(err);
     alert('Something went wrong during most sold submission.');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalText;
   }
 });
 
@@ -792,6 +816,11 @@ async function deleteCollection(id) {
 if (collectionForm) {
   collectionForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<span class="spinner"></span> Compressing image, please wait...`;
+
     const id = document.getElementById('collection-id').value;
     const formData = new FormData();
 
@@ -834,6 +863,9 @@ if (collectionForm) {
     } catch (err) {
       console.error(err);
       alert('Something went wrong during collection submission.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
     }
   });
 }
