@@ -1899,6 +1899,7 @@ nav a.active::after {
   height: 100%;
   object-fit: cover;
   border-radius: 24px;
+  transform: scaleX(-1);
 }
 
 /* Right: Content */
