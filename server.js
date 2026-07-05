@@ -6,6 +6,7 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const nodemailer = require('nodemailer');
+const sharp = require('sharp');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -279,6 +280,72 @@ const productUpload = upload.fields([
   { name: 'bgImage', maxCount: 1 }
 ]);
 
+// Image compression helper with sharp (compression without losing quality)
+async function optimizeImage(filePath) {
+  if (!filePath) return;
+  const ext = path.extname(filePath).toLowerCase();
+  
+  // Create a temporary file path
+  const tempPath = filePath + '.tmp';
+  
+  try {
+    let pipeline = sharp(filePath);
+    
+    // Get image metadata to check width/height
+    const metadata = await pipeline.metadata();
+    
+    // Resize if too large (e.g. max width 1200px)
+    if (metadata.width > 1200) {
+      pipeline = pipeline.resize({ width: 1200, withoutEnlargement: true });
+    }
+    
+    // Apply compression based on format
+    if (ext === '.jpg' || ext === '.jpeg') {
+      pipeline = pipeline.jpeg({ quality: 82, progressive: true });
+    } else if (ext === '.png') {
+      pipeline = pipeline.png({ compressionLevel: 8, palette: true });
+    } else if (ext === '.webp') {
+      pipeline = pipeline.webp({ quality: 80 });
+    }
+    
+    await pipeline.toFile(tempPath);
+    
+    // Overwrite the original file with the optimized one
+    fs.renameSync(tempPath, filePath);
+    console.log(`⚡ Optimized image: ${filePath}`);
+  } catch (err) {
+    console.error(`❌ Failed to optimize image ${filePath}:`, err.message);
+    // Cleanup temp file if it exists
+    if (fs.existsSync(tempPath)) {
+      try { fs.unlinkSync(tempPath); } catch (_) {}
+    }
+  }
+}
+
+// Middleware to automatically compress uploaded files
+const optimizeUploadedImages = async (req, res, next) => {
+  try {
+    // 1. Handle single file (req.file)
+    if (req.file) {
+      await optimizeImage(req.file.path);
+    }
+    // 2. Handle multiple files (req.files)
+    if (req.files) {
+      for (const fieldName of Object.keys(req.files)) {
+        const files = req.files[fieldName];
+        if (Array.isArray(files)) {
+          for (const file of files) {
+            await optimizeImage(file.path);
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.error('Error optimizing uploaded images:', err);
+  }
+  next();
+};
+
 // ── Mongoose Schemas ──────────────────────────────────────────────────────────
 
 const ProductSchema = new mongoose.Schema({
@@ -412,7 +479,7 @@ app.get('/api/admin/products', adminAuth, async (req, res) => {
 });
 
 // POST create product
-app.post('/api/products', adminAuth, productUpload, async (req, res) => {
+app.post('/api/products', adminAuth, productUpload, optimizeUploadedImages, async (req, res) => {
   try {
     const data = { ...req.body };
     if (req.files) {
@@ -440,7 +507,7 @@ app.post('/api/products', adminAuth, productUpload, async (req, res) => {
 });
 
 // PUT update product
-app.put('/api/products/:id', adminAuth, productUpload, async (req, res) => {
+app.put('/api/products/:id', adminAuth, productUpload, optimizeUploadedImages, async (req, res) => {
   try {
     const data = { ...req.body };
     if (req.files) {
@@ -506,7 +573,7 @@ app.get('/api/admin/collection', adminAuth, async (req, res) => {
   }
 });
 
-app.post('/api/collection', adminAuth, productUpload, async (req, res) => {
+app.post('/api/collection', adminAuth, productUpload, optimizeUploadedImages, async (req, res) => {
   try {
     const data = { ...req.body };
     if (req.files) {
@@ -530,7 +597,7 @@ app.post('/api/collection', adminAuth, productUpload, async (req, res) => {
   }
 });
 
-app.put('/api/collection/:id', adminAuth, productUpload, async (req, res) => {
+app.put('/api/collection/:id', adminAuth, productUpload, optimizeUploadedImages, async (req, res) => {
   try {
     const data = { ...req.body };
     if (req.files) {
@@ -582,7 +649,7 @@ app.get('/api/most-sold', async (req, res) => {
   }
 });
 
-app.post('/api/most-sold', adminAuth, upload.single('image'), async (req, res) => {
+app.post('/api/most-sold', adminAuth, upload.single('image'), optimizeUploadedImages, async (req, res) => {
   try {
     const count = await MostSold.countDocuments();
     if (count >= 3) {
@@ -598,7 +665,7 @@ app.post('/api/most-sold', adminAuth, upload.single('image'), async (req, res) =
   }
 });
 
-app.put('/api/most-sold/:id', adminAuth, upload.single('image'), async (req, res) => {
+app.put('/api/most-sold/:id', adminAuth, upload.single('image'), optimizeUploadedImages, async (req, res) => {
   try {
     const data = { ...req.body };
     if (req.file) data.image = '/uploads/products/' + req.file.filename;
@@ -658,7 +725,7 @@ app.get('/api/blog/:slug', async (req, res) => {
 });
 
 // POST create blog post
-app.post('/api/blog', adminAuth, upload.single('image'), async (req, res) => {
+app.post('/api/blog', adminAuth, upload.single('image'), optimizeUploadedImages, async (req, res) => {
   try {
     const data = { ...req.body };
     if (req.file) data.image = '/uploads/blog/' + req.file.filename;
@@ -674,7 +741,7 @@ app.post('/api/blog', adminAuth, upload.single('image'), async (req, res) => {
 });
 
 // PUT update blog post
-app.put('/api/blog/:id', adminAuth, upload.single('image'), async (req, res) => {
+app.put('/api/blog/:id', adminAuth, upload.single('image'), optimizeUploadedImages, async (req, res) => {
   try {
     const data = { ...req.body };
     if (req.file) data.image = '/uploads/blog/' + req.file.filename;
