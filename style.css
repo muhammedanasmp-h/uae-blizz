@@ -4459,7 +4459,7 @@ footer {
   }
 
   .expertise-content h2 {
-    font-size: 1.8rem;
+    font-size: 1.65rem;
   }
 
   .green-text {
@@ -4471,6 +4471,11 @@ footer {
     font-size: 0.9rem;
     line-height: 1.6;
     margin-bottom: 1.25rem;
+    text-align: justify;
+  }
+
+  .desktop-only {
+    display: none;
   }
 
   /* Inquiry Form & WhatsApp Buttons */
