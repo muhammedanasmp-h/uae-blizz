@@ -520,7 +520,7 @@
             const products = await res.json();
             
             if (products.length === 0) {
-              renderDefaultFallback();
+              grid.innerHTML = '<div class="no-products-message" style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #64748b; font-size: 1.1rem; font-weight: 500;">No products available at the moment.</div>';
               return;
             }
             
@@ -780,10 +780,21 @@
       const container = document.getElementById('pill-container');
       try {
         const res = await fetch('/api/most-sold');
-        const items = res.ok ? await res.json() : [];
-        currentMostSoldItems = items.length > 0 ? items : MOST_SOLD_FALLBACK;
+        if (!res.ok) throw new Error("Status: " + res.status);
+        const items = await res.json();
+        currentMostSoldItems = items;
         container.innerHTML = currentMostSoldItems.map((item, i) => renderPillCard(item, i)).join('');
+        
+        const mostSoldSection = document.getElementById('most-sold-section') || document.querySelector('.most-sold-section');
+        if (mostSoldSection) {
+          if (items.length === 0) {
+            mostSoldSection.style.display = 'none';
+          } else {
+            mostSoldSection.style.display = 'block';
+          }
+        }
       } catch (err) {
+        console.warn("Unable to load most sold items from database, using static fallback:", err);
         currentMostSoldItems = MOST_SOLD_FALLBACK;
         container.innerHTML = MOST_SOLD_FALLBACK.map((item, i) => renderPillCard(item, i)).join('');
       }

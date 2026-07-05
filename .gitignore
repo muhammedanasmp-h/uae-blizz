@@ -10,3 +10,6 @@ uploads/
 # OS metadata files
 .DS_Store
 Thumbs.db
+
+# Local JSON database fallback
+db.json

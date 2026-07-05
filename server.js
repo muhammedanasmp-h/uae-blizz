@@ -14,28 +14,14 @@ const PORT = process.env.PORT || 3000;
 // ── JSON Database Fallback ───────────────────────────────────────────────────
 const dbPath = path.join(__dirname, 'db.json');
 
-// Initialize db.json with beautiful default mock data if not existing or empty
+// Initialize db.json with empty default structure if not existing or empty
 if (!fs.existsSync(dbPath) || fs.readFileSync(dbPath, 'utf8').trim() === '') {
   const initialData = {
-    products: [
-      { _id: "mock_p1", name: "Blizz Detergent Powder 2.5kg", quantity: 2.5, unit: "kg", unitPerCarton: 1, category: "Detergent", price: 24, oldPrice: 27, rating: 4, badge: "discount", badgeText: "⚡ -11%", image: "asset/produt page/detergent_powder_2.5kg.png", isVisible: true, createdAt: new Date(Date.now() - 100000).toISOString() },
-      { _id: "mock_p2", name: "Liquid Detergent Ocean 4kg", quantity: 4, unit: "L", unitPerCarton: 1, category: "Detergent", price: 32, oldPrice: null, rating: 5, badge: "soldout", badgeText: "SOLD OUT", image: "asset/products/liquid detergent 4kg ocean.png", isVisible: true, createdAt: new Date(Date.now() - 200000).toISOString() },
-      { _id: "mock_p3", name: "Dishwash Liquid Lemon 1L", quantity: 1, unit: "L", unitPerCarton: 1, category: "Dishwash", price: 8, oldPrice: null, rating: 3, badge: "none", badgeText: "", image: "asset/products/dishwash 1litr lemon.png", isVisible: true, createdAt: new Date(Date.now() - 300000).toISOString() },
-      { _id: "mock_p4", name: "Antiseptic Disinfectant 1L", quantity: 1, unit: "L", unitPerCarton: 1, category: "Disinfectant", price: 15, oldPrice: null, rating: 5, badge: "none", badgeText: "", image: "asset/produt page/antiseptic disinfectant.png", isVisible: true, createdAt: new Date(Date.now() - 400000).toISOString() },
-      { _id: "mock_p5", name: "Floor Cleaner Lavender 1L", quantity: 1, unit: "L", unitPerCarton: 1, category: "Cleaner", price: 12, oldPrice: null, rating: 4, badge: "none", badgeText: "", image: "asset/products/floor cleaner.png", isVisible: true, createdAt: new Date(Date.now() - 500000).toISOString() },
-      { _id: "mock_p6", name: "Glass Cleaner Spray 500ml", quantity: 500, unit: "ml", unitPerCarton: 1, category: "Cleaner", price: 9, oldPrice: 10, rating: 5, badge: "discount", badgeText: "⚡ -10%", image: "asset/products/glass cleaner.png", isVisible: true, createdAt: new Date(Date.now() - 600000).toISOString() },
-      { _id: "mock_p7", name: "Hand Wash Liquid Pearl 500ml", quantity: 500, unit: "ml", unitPerCarton: 1, category: "Handwash", price: 14, oldPrice: null, rating: 2, badge: "soldout", badgeText: "SOLD OUT", image: "asset/products/hand wash liq.png", isVisible: true, createdAt: new Date(Date.now() - 700000).toISOString() },
-      { _id: "mock_p8", name: "Fabric Softener Floral Pink 2L", quantity: 2, unit: "L", unitPerCarton: 1, category: "Laundry", price: 18, oldPrice: null, rating: 5, badge: "none", badgeText: "", image: "asset/products/fabric softner floral pink.png", isVisible: true, createdAt: new Date(Date.now() - 800000).toISOString() }
-    ],
-    blogs: [
-      { _id: "mock_b1", title: "The Future of Commercial Laundry in UAE", slug: "the-future-of-commercial-laundry-in-uae-1", excerpt: "How new sustainability regulations are shaping the hospitality cleaning chemical sector in Dubai.", content: "<p>The hospitality sector in Dubai and the wider UAE is moving fast towards eco-friendly solutions...</p>", category: "Industry News", date: new Date().toISOString(), image: "", isPublished: true, createdAt: new Date().toISOString() }
-    ],
-    mostsold: [
-      { _id: "mock_ms1", title: "DETERGENT", subtitle: "BULK PALLET (24 CTN)", price: 768.00, label: "MOST SOLD", colors: "#9b89b3, #504443, #1a1a1a", image: "asset/products/liquid detergent 4kg lavender.png", createdAt: new Date(Date.now() - 10000).toISOString() },
-      { _id: "mock_ms2", title: "DISHWASH", subtitle: "BULK PALLET (50 CTN)", price: 400.00, label: "MOST SOLD", colors: "#8bc34a, #504443, #1a1a1a", image: "asset/products/dish wash 1litr green apple.png", createdAt: new Date(Date.now() - 20000).toISOString() },
-      { _id: "mock_ms3", title: "DISHWASH", subtitle: "BULK PALLET (50 CTN)", price: 400.00, label: "MOST SOLD", colors: "#e91e63, #504443, #1a1a1a", image: "asset/products/dishwash 1litr strawberry.png", createdAt: new Date(Date.now() - 30000).toISOString() }
-    ],
-    enquiries: []
+    products: [],
+    blogs: [],
+    mostsold: [],
+    enquiries: [],
+    collection: []
   };
   fs.writeFileSync(dbPath, JSON.stringify(initialData, null, 2));
 }

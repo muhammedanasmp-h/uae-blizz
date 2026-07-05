@@ -237,24 +237,22 @@ async function initDynamicCollection() {
     if (!res.ok) throw new Error("Status: " + res.status);
     const fetched = await res.json();
     const visibleProducts = fetched.filter(p => p.isVisible === true || p.isVisible === 'true');
-    if (visibleProducts && visibleProducts.length > 0) {
-      collectionProducts.length = 0;
-      visibleProducts.forEach(p => {
-        collectionProducts.push({
-          _id: p._id,
-          name: p.name,
-          category: p.category || 'detergent',
-          desc: p.desc || '',
-          packaging: p.packaging || '',
-          image: p.image || '',
-          badge: (p.badge && p.badge !== 'none') ? p.badgeText || p.badge : '',
-          bgImage: p.bgImage || '',
-          price: p.price || 0,
-          oldPrice: p.oldPrice || null,
-          rating: p.rating || 5
-        });
+    collectionProducts.length = 0;
+    visibleProducts.forEach(p => {
+      collectionProducts.push({
+        _id: p._id,
+        name: p.name,
+        category: p.category || 'detergent',
+        desc: p.desc || '',
+        packaging: p.packaging || '',
+        image: p.image || '',
+        badge: (p.badge && p.badge !== 'none') ? p.badgeText || p.badge : '',
+        bgImage: p.bgImage || '',
+        price: p.price || 0,
+        oldPrice: p.oldPrice || null,
+        rating: p.rating || 5
       });
-    }
+    });
   } catch (err) {
     console.warn("Failed to load collection products from database, using static fallback:", err);
   } finally {
