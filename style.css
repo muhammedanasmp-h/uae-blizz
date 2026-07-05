@@ -1899,7 +1899,6 @@ nav a.active::after {
   height: 100%;
   object-fit: cover;
   border-radius: 24px;
-  transform: scaleX(-1);
 }
 
 /* Right: Content */
@@ -4438,6 +4437,10 @@ footer {
 
   .why-us-visual {
     height: 280px;
+  }
+
+  .why-us-visual img {
+    transform: scaleX(-1);
   }
 
   .expertise {
