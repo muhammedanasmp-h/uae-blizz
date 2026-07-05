@@ -909,10 +909,10 @@ function initMobileHandsScroll() {
     // The hands will slide fully in over 300px of scrolling
     const progress = Math.min(scrollY / 300, 1);
     
-    // Left hand slides from -100% to -20% (moving it a little more to the right)
-    const leftTranslate = -100 + (progress * 80);
-    // Right hand slides from 100% to 10% (keeping it very slightly more to the right)
-    const rightTranslate = 100 - (progress * 90);
+    // Left hand slides from -100% to -35% (keeping it a bit more to the left)
+    const leftTranslate = -100 + (progress * 65);
+    // Right hand slides from 100% to 25% (keeping it a bit more to the right)
+    const rightTranslate = 100 - (progress * 75);
     
     requestAnimationFrame(() => {
       handLeft.style.transform = `translateX(${leftTranslate}%)`;

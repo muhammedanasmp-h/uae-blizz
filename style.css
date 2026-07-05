@@ -349,7 +349,8 @@ header .container {
   gap: 0.5rem;
 }
 
-.logo img {
+.logo img,
+.footer-logo {
   height: 45px; /* Scaled down slightly to fit the slimmer header */
   width: auto;
   object-fit: contain;
@@ -3651,11 +3652,13 @@ footer {
 
   .panoramic-header .hero-title-top { font-size: 1.6rem !important; margin-bottom: 1.5rem !important; }
 
-  .panoramic-header .hero-title-bottom { font-size: 2.2rem !important;
+  .panoramic-header .hero-title-bottom { font-size: 1.85rem !important;
+    line-height: 1.25 !important;
     letter-spacing: -0.5px;
   }
 
-  .panoramic-header .hero-description { font-size: 1.1rem;
+  .panoramic-header .hero-description { font-size: 0.95rem !important;
+    line-height: 1.5 !important;
     margin-bottom: 1rem;
   }
 
@@ -3996,7 +3999,7 @@ footer {
     display: block !important;
     position: absolute;
     bottom: 20px;
-    width: 380px;
+    width: 330px;
     z-index: 2;
     pointer-events: none;
     transition: transform 0.1s ease-out;
@@ -4473,6 +4476,11 @@ footer {
   /* Inquiry Form & WhatsApp Buttons */
   .inquiry {
     padding: 4rem 0;
+  }
+
+  .inquiry-split {
+    grid-template-columns: 1fr;
+    gap: 3rem;
   }
 
   .inquiry-title {
@@ -5222,10 +5230,15 @@ footer {
 }
 
 @media (max-width: 768px) {
+  .products-catalog-section .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
   .catalog-items-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
-    padding: 0.5rem;
+    padding: 0.5rem 0;
   }
   
   .catalog-card {
