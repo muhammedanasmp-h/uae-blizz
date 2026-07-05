@@ -701,22 +701,6 @@ const collectionForm = document.getElementById('collection-form');
 setupImagePreview('collection-image', 'collection-image-preview');
 setupImagePreview('collection-bg-image', 'collection-bg-image-preview');
 
-const collectionBadgeSelect = document.getElementById('collection-badge');
-if (collectionBadgeSelect) {
-  collectionBadgeSelect.addEventListener('change', toggleCollectionBadgeText);
-}
-
-function toggleCollectionBadgeText() {
-  const badgeVal = document.getElementById('collection-badge').value;
-  const container = document.getElementById('collection-badge-text-container');
-  if (badgeVal && badgeVal !== 'none') {
-    container.style.display = 'block';
-  } else {
-    container.style.display = 'none';
-    document.getElementById('collection-badge-text').value = '';
-  }
-}
-
 function openCollectionModal(item = null) {
   if (!collectionModal) return;
   collectionModal.classList.add('active');
@@ -724,14 +708,7 @@ function openCollectionModal(item = null) {
   const titleEl = document.getElementById('collection-modal-title');
   const idInput = document.getElementById('collection-id');
   const nameInput = document.getElementById('collection-name');
-  const priceInput = document.getElementById('collection-price');
-  const oldPriceInput = document.getElementById('collection-old-price');
-  const categorySelect = document.getElementById('collection-category');
-  const ratingInput = document.getElementById('collection-rating');
-  const badgeSelect = document.getElementById('collection-badge');
-  const badgeTextInput = document.getElementById('collection-badge-text');
   const descInput = document.getElementById('collection-desc');
-  const packagingInput = document.getElementById('collection-packaging');
   const visibleCheck = document.getElementById('collection-visible');
 
   // Reset previews
@@ -746,14 +723,7 @@ function openCollectionModal(item = null) {
     titleEl.textContent = 'Edit Collection Product';
     idInput.value = item._id || '';
     nameInput.value = item.name || '';
-    priceInput.value = item.price || '';
-    oldPriceInput.value = item.oldPrice !== null ? item.oldPrice : '';
-    categorySelect.value = item.category || 'detergent';
-    ratingInput.value = item.rating || 5;
-    badgeSelect.value = item.badge || 'none';
-    badgeTextInput.value = item.badgeText || '';
     descInput.value = item.desc || '';
-    packagingInput.value = item.packaging || '';
     visibleCheck.checked = item.isVisible !== false;
 
     if (item.image) {
@@ -766,9 +736,7 @@ function openCollectionModal(item = null) {
     titleEl.textContent = 'Add Collection Product';
     idInput.value = '';
     visibleCheck.checked = true;
-    ratingInput.value = 5;
   }
-  toggleCollectionBadgeText();
 }
 
 function closeCollectionModal() {
@@ -778,7 +746,7 @@ function closeCollectionModal() {
 async function loadCollection() {
   const tbody = document.getElementById('collection-table-body');
   if (!tbody) return;
-  tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem;">Loading collection products...</td></tr>';
+  tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 2rem;">Loading collection products...</td></tr>';
 
   try {
     const res = await fetch(`${API_BASE}/admin/collection`, {
@@ -789,54 +757,32 @@ async function loadCollection() {
     tbody.innerHTML = '';
 
     if (products.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-muted);">No products found in collection. Add one above!</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 2rem; color: var(--text-muted);">No products found in collection. Add one above!</td></tr>';
       return;
     }
 
     products.forEach(p => {
       const tr = document.createElement('tr');
 
-      // Rating stars helper
-      let stars = '';
-      for (let i = 1; i <= 5; i++) {
-        if (i <= p.rating) {
-          stars += '<span style="color: #fbbf24; font-size: 1.1rem;">★</span>';
-        } else {
-          stars += '<span style="color: #475569; font-size: 1.1rem;">★</span>';
-        }
-      }
+      // Visibility badge
+      const isVisibleBadge = p.isVisible 
+        ? `<span class="action-badge badge-green">Live</span>`
+        : `<span class="action-badge badge-gray">Hidden</span>`;
 
-      // Badge formatting
-      let badgeLabel = '—';
-      if (p.badge && p.badge !== 'none') {
-        const customText = p.badgeText || p.badge.toUpperCase();
-        let badgeColorClass = 'badge-blue';
-        if (p.badge === 'discount') badgeColorClass = 'badge-red';
-        if (p.badge === 'soldout') badgeColorClass = 'badge-gray';
-        if (p.badge === 'popular') badgeColorClass = 'badge-orange';
-        badgeLabel = `<span class="action-badge ${badgeColorClass}">${customText}</span>`;
-      }
-
-      // Visibility label
-      const visLabel = p.isVisible ? '' : ' <span style="font-size: 0.75rem; color: var(--text-muted);">(Hidden)</span>';
+      // Limit description length for display in table
+      const displayDesc = p.desc && p.desc.length > 80 
+        ? p.desc.substring(0, 80) + '...' 
+        : (p.desc || '—');
 
       tr.innerHTML = `
         <td>
           <div class="product-cell">
             <img class="product-thumb" src="${p.image || 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%23ccc\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4\'%3E%3C/path%3E%3C/svg%3E'}" alt="">
-            <div>
-              <strong style="display:block;">${p.name}</strong>
-              ${visLabel}
-            </div>
+            <strong>${p.name}</strong>
           </div>
         </td>
-        <td><span class="action-badge">${p.category}</span></td>
-        <td>
-          <span style="font-weight: 600">AED ${parseFloat(p.price).toFixed(2)}</span>
-          ${p.oldPrice ? `<br><small style="text-decoration: line-through; color: var(--text-muted)">AED ${parseFloat(p.oldPrice).toFixed(2)}</small>` : ''}
-        </td>
-        <td>${stars}</td>
-        <td>${badgeLabel}</td>
+        <td>${displayDesc}</td>
+        <td>${isVisibleBadge}</td>
         <td>
           <div class="action-buttons">
             <button class="btn-icon edit-btn" onclick="editCollection('${p._id}')">
@@ -852,7 +798,7 @@ async function loadCollection() {
     });
   } catch (err) {
     console.error(err);
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem; color: var(--accent-red);">Error loading collection products.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 2rem; color: var(--accent-red);">Error loading collection products.</td></tr>';
   }
 }
 
@@ -894,15 +840,16 @@ if (collectionForm) {
     const formData = new FormData();
 
     formData.append('name', document.getElementById('collection-name').value);
-    formData.append('price', document.getElementById('collection-price').value);
-    formData.append('oldPrice', document.getElementById('collection-old-price').value);
-    formData.append('category', document.getElementById('collection-category').value);
-    formData.append('rating', document.getElementById('collection-rating').value);
-    formData.append('badge', document.getElementById('collection-badge').value);
-    formData.append('badgeText', document.getElementById('collection-badge-text').value);
     formData.append('desc', document.getElementById('collection-desc').value);
-    formData.append('packaging', document.getElementById('collection-packaging').value);
     formData.append('isVisible', document.getElementById('collection-visible').checked);
+    // Send defaults/empties for schema compatibility
+    formData.append('price', '0');
+    formData.append('oldPrice', '');
+    formData.append('category', 'detergent');
+    formData.append('rating', '5');
+    formData.append('badge', 'none');
+    formData.append('badgeText', '');
+    formData.append('packaging', '');
 
     const imgFile = document.getElementById('collection-image').files[0];
     if (imgFile) formData.append('image', imgFile);
@@ -941,5 +888,3 @@ window.closeCollectionModal = closeCollectionModal;
 window.editCollection = editCollection;
 window.deleteCollection = deleteCollection;
 window.loadCollection = loadCollection;
-window.toggleCollectionBadgeText = toggleCollectionBadgeText;
-

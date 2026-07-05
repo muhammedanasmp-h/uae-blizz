@@ -727,10 +727,8 @@
             <thead>
               <tr>
                 <th>Product</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>Rating</th>
-                <th>Status / Badge</th>
+                <th>Description</th>
+                <th>Status</th>
                 <th style="width: 100px;">Actions</th>
               </tr>
             </thead>
@@ -997,58 +995,9 @@
             <input type="text" id="collection-name" class="form-control" placeholder="e.g. Laundry Liquid - Lavender" required>
           </div>
 
-          <div class="grid-2">
-            <div class="form-group">
-              <label>Price (AED)</label>
-              <input type="number" step="0.01" id="collection-price" class="form-control" placeholder="e.g. 85.00" required>
-            </div>
-            <div class="form-group">
-              <label>Old Price (AED, Optional)</label>
-              <input type="number" step="0.01" id="collection-old-price" class="form-control" placeholder="e.g. 95.00">
-            </div>
-          </div>
-
-          <div class="grid-2">
-            <div class="form-group">
-              <label>Category (for Color Theme)</label>
-              <select id="collection-category" class="form-control" required>
-                <option value="detergent">Laundry &amp; Detergent</option>
-                <option value="surface">Surface &amp; Floor Cleaner</option>
-                <option value="disinfectant">Sanitizer &amp; Disinfectant</option>
-                <option value="handcare">Hand &amp; Body Care</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Rating (1-5 Stars)</label>
-              <input type="number" id="collection-rating" class="form-control" min="1" max="5" value="5" required>
-            </div>
-          </div>
-
-          <div class="grid-2">
-            <div class="form-group">
-              <label>Badge</label>
-              <select id="collection-badge" class="form-control">
-                <option value="none">None</option>
-                <option value="discount">Discount</option>
-                <option value="soldout">Sold Out</option>
-                <option value="popular">Popular</option>
-                <option value="new">New</option>
-              </select>
-            </div>
-            <div class="form-group" id="collection-badge-text-container" style="display: none;">
-              <label>Badge Custom Text</label>
-              <input type="text" id="collection-badge-text" class="form-control" placeholder="e.g. ⚡ -11%, SOLD OUT, POPULAR">
-            </div>
-          </div>
-
           <div class="form-group">
-            <label>Product Description (Full details for Popup)</label>
-            <textarea id="collection-desc" class="form-control" placeholder="Detailed wholesale/retail product description..." rows="3"></textarea>
-          </div>
-
-          <div class="form-group">
-            <label>Packaging Details</label>
-            <input type="text" id="collection-packaging" class="form-control" placeholder="e.g. 20L Canister (Also available in 5L)">
+            <label>Product Description (Paragraph about the product)</label>
+            <textarea id="collection-desc" class="form-control" placeholder="Detailed wholesale/retail product description..." rows="3" required></textarea>
           </div>
 
           <div class="form-group">

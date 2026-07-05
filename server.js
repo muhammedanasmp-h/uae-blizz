@@ -228,13 +228,26 @@ app.use(express.static(path.join(__dirname), { extensions: ['html', 'htm'] }));
 // Serve uploaded images
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// ── MongoDB Connection ────────────────────────────────────────────────────────
-mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 5000 })
-  .then(() => console.log('✅ MongoDB connected'))
-  .catch(err => {
+// Disable buffering so queries fail instantly on connection drop
+mongoose.set('bufferCommands', false);
+
+// We will connect and start the server at the bottom of the file
+let dbConnected = false;
+const connectDb = async () => {
+  if (!process.env.MONGO_URI) {
+    console.log('⚠️ MONGO_URI not defined, using JSON database');
+    useJsonFallback();
+    return;
+  }
+  try {
+    await mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 5000 });
+    console.log('✅ MongoDB connected');
+    dbConnected = true;
+  } catch (err) {
     console.error('❌ MongoDB error, falling back to local JSON database:', err.message);
     useJsonFallback();
-  });
+  }
+};
 
 // ── Multer (Image Upload) ─────────────────────────────────────────────────────
 const storage = multer.diskStorage({
@@ -824,9 +837,14 @@ app.get('/api/admin/stats', adminAuth, async (req, res) => {
 });
 
 // ── Start Server ──────────────────────────────────────────────────────────────
-app.listen(PORT, () => {
-  console.log(`🚀 Blizz Admin Server running on http://localhost:${PORT}`);
-  console.log(`📦 Admin Panel: http://localhost:${PORT}/admin.html`);
-  console.log(`🛍️  Products:    http://localhost:${PORT}/products.html`);
-  console.log(`📰 Blog:        http://localhost:${PORT}/blog.html`);
-});
+const startServer = async () => {
+  await connectDb();
+  app.listen(PORT, () => {
+    console.log(`🚀 Blizz Admin Server running on http://localhost:${PORT}`);
+    console.log(`📦 Admin Panel: http://localhost:${PORT}/admin.html`);
+    console.log(`🛍️  Products:    http://localhost:${PORT}/products.html`);
+    console.log(`📰 Blog:        http://localhost:${PORT}/blog.html`);
+  });
+};
+
+startServer();
