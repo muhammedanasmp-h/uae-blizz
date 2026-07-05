@@ -210,10 +210,26 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files (HTML, CSS, JS, assets) with extension fallback
-app.use(express.static(path.join(__dirname), { extensions: ['html', 'htm'] }));
-// Serve uploaded images
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Serve static files (HTML, CSS, JS, assets) with extension fallback and optimal caching headers
+app.use(express.static(path.join(__dirname), {
+  extensions: ['html', 'htm'],
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.html') || filePath.endsWith('.htm')) {
+      res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+    } else if (filePath.match(/\.(js|css|png|jpg|jpeg|gif|ico|svg|webp|webm|mp4|woff|woff2|ttf|eot)$/)) {
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    }
+  }
+}));
+
+// Serve uploaded images with caching headers
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
+  setHeaders: (res, filePath) => {
+    if (filePath.match(/\.(png|jpg|jpeg|gif|webp|svg)$/)) {
+      res.setHeader('Cache-Control', 'public, max-age=604800'); // 7 days cache for uploads
+    }
+  }
+}));
 
 // Disable buffering so queries fail instantly on connection drop
 mongoose.set('bufferCommands', false);
