@@ -747,9 +747,14 @@
     let currentMostSoldItems = [];
 
     function renderPillCard(item, index) {
-      const colorDots = item.colors
-        ? item.colors.split(',').map(c => `<span class="color-dot" style="background: ${c.trim()};"></span>`).join('')
-        : '';
+      // Statically assign color dots based on card index (0, 1, 2)
+      let colorsArray = ['#9b89b3', '#504443', '#1a1a1a']; // Default (index 0)
+      if (index === 1) {
+        colorsArray = ['#8bc34a', '#504443', '#1a1a1a']; // Green (index 1)
+      } else if (index === 2) {
+        colorsArray = ['#e91e63', '#504443', '#1a1a1a']; // Pink (index 2)
+      }
+      const colorDots = colorsArray.map(c => `<span class="color-dot" style="background: ${c};"></span>`).join('');
 
       return `
         <div class="pill-card reveal reveal-up ${DELAY_CLASSES[index] || ''}" onclick="openMostSoldOrder(${index})" style="cursor: pointer;">

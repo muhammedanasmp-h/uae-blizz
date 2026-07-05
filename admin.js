@@ -495,7 +495,6 @@ function openMostSoldModal(itemData = null) {
     document.getElementById('most-sold-subtitle').value = itemData.subtitle || '';
     document.getElementById('most-sold-price').value = itemData.price;
     document.getElementById('most-sold-label').value = itemData.label || 'MOST SOLD';
-    document.getElementById('most-sold-colors').value = itemData.colors || '';
     if (itemData.image) preview.src = itemData.image;
   } else {
     title.textContent = 'Add Most Sold Product';
@@ -619,7 +618,7 @@ document.getElementById('most-sold-form').addEventListener('submit', async (e) =
   formData.append('subtitle', document.getElementById('most-sold-subtitle').value);
   formData.append('price', document.getElementById('most-sold-price').value);
   formData.append('label', document.getElementById('most-sold-label').value);
-  formData.append('colors', document.getElementById('most-sold-colors').value);
+  formData.append('colors', '');
 
   const fileInput = document.getElementById('most-sold-image');
   if (fileInput.files[0]) {
