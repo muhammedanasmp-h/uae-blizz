@@ -154,40 +154,17 @@ function setupImagePreview(inputId, previewId) {
   }
 }
 setupImagePreview('product-image', 'product-image-preview');
-setupImagePreview('product-bg-image', 'product-bg-image-preview');
 setupImagePreview('blog-image', 'blog-image-preview');
 
 // --- Product Modals & Toggle Functions ---
-function toggleBadgeText() {
-  const select = document.getElementById('product-badge');
-  const badgeTextContainer = document.getElementById('badge-text-container');
-  const badgeTextInput = document.getElementById('product-badge-text');
-
-  if (select.value === 'none') {
-    badgeTextContainer.style.display = 'none';
-    badgeTextInput.value = '';
-  } else {
-    badgeTextContainer.style.display = 'block';
-    // Auto populate badge text with sensible defaults if empty
-    if (!badgeTextInput.value) {
-      if (select.value === 'discount') badgeTextInput.value = '⚡ -10%';
-      if (select.value === 'soldout') badgeTextInput.value = 'SOLD OUT';
-      if (select.value === 'popular') badgeTextInput.value = 'Popular';
-      if (select.value === 'new') badgeTextInput.value = 'New';
-    }
-  }
-}
-
 function openProductModal(productData = null) {
   const modal = document.getElementById('product-modal');
   const form = document.getElementById('product-form');
   const title = document.getElementById('product-modal-title');
   const preview = document.getElementById('product-image-preview');
-  const bgPreview = document.getElementById('product-bg-image-preview');
 
   form.reset();
   preview.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23475569'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'/%3E%3C/svg%3E";
-  bgPreview.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23475569'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'/%3E%3C/svg%3E";
 
   if (productData) {
     title.textContent = 'Edit Product';
@@ -199,19 +176,11 @@ function openProductModal(productData = null) {
     document.getElementById('product-category').value = productData.category;
     document.getElementById('product-price').value = productData.price;
     document.getElementById('product-old-price').value = productData.oldPrice || '';
-    document.getElementById('product-rating').value = productData.rating;
-    document.getElementById('product-badge').value = productData.badge || 'none';
-    document.getElementById('product-badge-text').value = productData.badgeText || '';
-    document.getElementById('product-desc').value = productData.desc || '';
-    document.getElementById('product-packaging').value = productData.packaging || '';
     document.getElementById('product-visible').checked = productData.isVisible;
     if (productData.image) preview.src = productData.image;
-    if (productData.bgImage) bgPreview.src = productData.bgImage;
-    toggleBadgeText();
   } else {
     title.textContent = 'Add New Product';
     document.getElementById('product-id').value = '';
-    document.getElementById('badge-text-container').style.display = 'none';
   }
 
   modal.classList.add('active');
@@ -237,12 +206,6 @@ async function loadProducts() {
         ? `<span class="action-badge badge-green">Live</span>`
         : `<span class="action-badge badge-gray">Hidden</span>`;
       
-      const badgeIndicator = p.badge && p.badge !== 'none'
-        ? `<span class="action-badge badge-red" style="margin-top:0.25rem; font-size:0.7rem">${p.badgeText || p.badge}</span>`
-        : '';
-
-      const ratingStars = '★'.repeat(p.rating) + '☆'.repeat(5 - p.rating);
-
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>
@@ -259,13 +222,7 @@ async function loadProducts() {
           <span style="font-weight:600">AED ${p.price.toFixed(2)}</span>
           ${p.oldPrice ? `<del style="display:block; font-size:0.8rem; color:var(--accent-red)">AED ${p.oldPrice.toFixed(2)}</del>` : ''}
         </td>
-        <td style="color:#fbbf24">${ratingStars}</td>
-        <td>
-          <div style="display:flex; flex-direction:column; align-items:flex-start">
-            ${isVisibleBadge}
-            ${badgeIndicator}
-          </div>
-        </td>
+        <td>${isVisibleBadge}</td>
         <td>
           <div class="action-buttons">
             <button class="btn-icon edit-btn" onclick="editProduct('${p._id}')">
@@ -327,21 +284,19 @@ document.getElementById('product-form').addEventListener('submit', async (e) => 
   formData.append('category', document.getElementById('product-category').value);
   formData.append('price', document.getElementById('product-price').value);
   formData.append('oldPrice', document.getElementById('product-old-price').value);
-  formData.append('rating', document.getElementById('product-rating').value);
-  formData.append('badge', document.getElementById('product-badge').value);
-  formData.append('badgeText', document.getElementById('product-badge-text').value);
-  formData.append('desc', document.getElementById('product-desc').value);
-  formData.append('packaging', document.getElementById('product-packaging').value);
   formData.append('isVisible', document.getElementById('product-visible').checked);
+
+  // Defaults for schema fields we are removing/hiding
+  formData.append('rating', '5');
+  formData.append('badge', 'none');
+  formData.append('badgeText', '');
+  formData.append('desc', '');
+  formData.append('packaging', '');
+  formData.append('bgImage', '');
 
   const fileInput = document.getElementById('product-image');
   if (fileInput.files[0]) {
     formData.append('image', fileInput.files[0]);
-  }
-
-  const bgFileInput = document.getElementById('product-bg-image');
-  if (bgFileInput.files[0]) {
-    formData.append('bgImage', bgFileInput.files[0]);
   }
 
   const url = id ? `${API_BASE}/products/${id}` : `${API_BASE}/products`;

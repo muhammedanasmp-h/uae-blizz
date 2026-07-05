@@ -421,7 +421,7 @@ let Enquiry = mongoose.model('Enquiry', EnquirySchema);
 const CollectionProductSchema = new mongoose.Schema({
   name:          { type: String, required: true, trim: true },
   category:      { type: String, default: 'detergent' },
-  price:         { type: Number, required: true },
+  price:         { type: Number, default: 0 },
   oldPrice:      { type: Number, default: null },
   rating:        { type: Number, min: 1, max: 5, default: 5 },
   badge:         { type: String, enum: ['none', 'discount', 'soldout', 'popular', 'new'], default: 'none' },
