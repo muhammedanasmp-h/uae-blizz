@@ -41,7 +41,8 @@ function switchTab(tabId) {
     'tab-products': 'Products Catalog',
     'tab-blog': 'Blog Management',
     'tab-most-sold': 'Most Sold Products',
-    'tab-collection': 'Our Collection'
+    'tab-collection': 'Our Collection',
+    'tab-agents': 'Agent Manager'
   };
   document.getElementById('page-title').textContent = titleMap[tabId] || 'Dashboard';
 
@@ -56,6 +57,7 @@ function switchTab(tabId) {
   if (tabId === 'tab-blog') loadBlogs();
   if (tabId === 'tab-most-sold') loadMostSold();
   if (tabId === 'tab-collection') loadCollection();
+  if (tabId === 'tab-agents') loadAgents();
 }
 
 // --- Mobile Navigation Drawer Toggle ---
@@ -133,6 +135,8 @@ async function loadStats() {
     document.getElementById('stat-total-posts').textContent = data.totalPosts || 0;
     const collectionStatEl = document.getElementById('stat-total-collection');
     if (collectionStatEl) collectionStatEl.textContent = data.totalCollection || 0;
+    const agentsStatEl = document.getElementById('stat-total-agents');
+    if (agentsStatEl) agentsStatEl.textContent = data.activeAgents !== undefined ? `${data.activeAgents}/${data.totalAgents}` : '0';
   } catch (err) {
     console.error(err);
   }
@@ -876,3 +880,191 @@ window.closeCollectionModal = closeCollectionModal;
 window.editCollection = editCollection;
 window.deleteCollection = deleteCollection;
 window.loadCollection = loadCollection;
+
+// --- AGENT MANAGER LOGIC ---
+const agentModal = document.getElementById('agent-modal');
+const agentForm = document.getElementById('agent-form');
+
+setupImagePreview('agent-image', 'agent-image-preview');
+
+function openAgentModal(agent = null) {
+  const titleEl = document.getElementById('agent-modal-title');
+  const idInput = document.getElementById('agent-id');
+  const nameInput = document.getElementById('agent-name');
+  const roleInput = document.getElementById('agent-role');
+  const phoneInput = document.getElementById('agent-phone');
+  const labelInput = document.getElementById('agent-label');
+  const previewImg = document.getElementById('agent-image-preview');
+  const activeCheck = document.getElementById('agent-active');
+
+  // Reset file input
+  const fileInput = document.getElementById('agent-image');
+  if (fileInput) fileInput.value = '';
+
+  if (agent) {
+    titleEl.textContent = 'Edit Support Agent';
+    idInput.value = agent._id;
+    nameInput.value = agent.name || '';
+    roleInput.value = agent.role || '';
+    phoneInput.value = agent.phone || '';
+    labelInput.value = agent.label || '';
+    previewImg.src = agent.image || `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23475569'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'/%3E%3C/svg%3E`;
+    activeCheck.checked = agent.isActive !== false;
+  } else {
+    titleEl.textContent = 'Add Support Agent';
+    idInput.value = '';
+    nameInput.value = '';
+    roleInput.value = '';
+    phoneInput.value = '';
+    labelInput.value = '';
+    previewImg.src = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23475569'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'/%3E%3C/svg%3E`;
+    activeCheck.checked = true;
+  }
+
+  if (agentModal) agentModal.classList.add('active');
+}
+
+function closeAgentModal() {
+  if (agentModal) agentModal.classList.remove('active');
+}
+
+async function loadAgents() {
+  const tbody = document.getElementById('agents-table-body');
+  if (!tbody) return;
+  tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem;">Loading support agents...</td></tr>';
+
+  try {
+    const res = await fetch(`${API_BASE}/admin/agents`, {
+      headers: getAuthHeaders()
+    });
+    if (!res.ok) throw new Error('Failed to load agents');
+    const agents = await res.json();
+    tbody.innerHTML = '';
+
+    if (agents.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-muted);">No agents found. Add one above!</td></tr>';
+      return;
+    }
+
+    agents.forEach(agent => {
+      const tr = document.createElement('tr');
+
+      const isActiveBadge = agent.isActive 
+        ? `<span class="action-badge badge-green">Active</span>`
+        : `<span class="action-badge badge-gray">Inactive</span>`;
+
+      tr.innerHTML = `
+        <td>
+          <div class="product-cell">
+            <img class="product-thumb" src="${agent.image || 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%23ccc\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z\'%3E%3C/path%3E%3C/svg%3E'}" alt="" style="border-radius: 50%; object-fit: cover; width: 40px; height: 40px;">
+            <strong>${agent.name}</strong>
+          </div>
+        </td>
+        <td>${agent.role || '—'}</td>
+        <td>${agent.phone || '—'}</td>
+        <td>${agent.label || '—'}</td>
+        <td>${isActiveBadge}</td>
+        <td>
+          <div class="action-buttons">
+            <button class="btn-icon edit-btn" onclick="editAgent('${agent._id}')">
+              <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            </button>
+            <button class="btn-icon delete-btn" onclick="deleteAgent('${agent._id}')">
+              <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+            </button>
+          </div>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  } catch (err) {
+    console.error(err);
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem; color: var(--accent-red);">Error loading support agents.</td></tr>';
+  }
+}
+
+async function editAgent(id) {
+  try {
+    const res = await fetch(`${API_BASE}/admin/agents`, {
+      headers: getAuthHeaders()
+    });
+    const agents = await res.json();
+    const agent = agents.find(a => a._id === id);
+    if (agent) openAgentModal(agent);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+async function deleteAgent(id) {
+  if (!confirm('Are you sure you want to permanently delete this support agent?')) return;
+  try {
+    const res = await fetch(`${API_BASE}/agents/${id}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders()
+    });
+    if (res.ok) {
+      loadAgents();
+      loadStats();
+    } else {
+      alert('Failed to delete support agent');
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+if (agentForm) {
+  agentForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<span class="spinner"></span> Saving agent, please wait...`;
+
+    const id = document.getElementById('agent-id').value;
+    const formData = new FormData();
+
+    formData.append('name', document.getElementById('agent-name').value);
+    formData.append('role', document.getElementById('agent-role').value);
+    formData.append('phone', document.getElementById('agent-phone').value);
+    formData.append('label', document.getElementById('agent-label').value);
+    formData.append('isActive', document.getElementById('agent-active').checked);
+
+    const imgFile = document.getElementById('agent-image').files[0];
+    if (imgFile) formData.append('image', imgFile);
+
+    const url = id ? `${API_BASE}/agents/${id}` : `${API_BASE}/agents`;
+    const method = id ? 'PUT' : 'POST';
+
+    try {
+      const res = await fetch(url, {
+        method: method,
+        headers: getAuthHeaders(),
+        body: formData
+      });
+
+      if (res.ok) {
+        closeAgentModal();
+        loadAgents();
+        loadStats();
+      } else {
+        const errData = await res.json();
+        alert('Error: ' + errData.error);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Something went wrong during agent submission.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+    }
+  });
+}
+
+// Bind to window for HTML inline event handlers
+window.openAgentModal = openAgentModal;
+window.closeAgentModal = closeAgentModal;
+window.editAgent = editAgent;
+window.deleteAgent = deleteAgent;
+window.loadAgents = loadAgents;

@@ -988,6 +988,36 @@ function initScrollReveal() {
   });
 }
 
+// --- Dynamic Support Agents Integration ---
+function initWhatsAppSupport() {
+  const floatingBtn = document.querySelector('.floating-whatsapp-btn');
+  const indexButtonsContainer = document.getElementById('index-whatsapp-buttons');
+  const defaultPhone = '971555292167';
+
+  // 1. Setup floating button
+  if (floatingBtn) {
+    floatingBtn.href = `https://wa.me/${defaultPhone}`;
+    floatingBtn.setAttribute('target', '_blank');
+  }
+
+  // 2. Setup index homepage buttons
+  if (indexButtonsContainer) {
+    indexButtonsContainer.innerHTML = `
+      <a href="https://wa.me/${defaultPhone}" target="_blank" class="whatsapp-btn whatsapp-btn-main">
+        <img src="asset/whatsapp logo.png" alt="WhatsApp" style="width: 20px; height: 20px; object-fit: contain; margin-right: 8px; vertical-align: middle;">
+        Chat with Sales
+      </a>
+      <a href="https://wa.me/${defaultPhone}" target="_blank" class="whatsapp-btn whatsapp-btn-outline">
+        <img src="asset/whatsapp logo.png" alt="WhatsApp" style="width: 20px; height: 20px; object-fit: contain; margin-right: 8px; vertical-align: middle;">
+        WhatsApp Support
+      </a>
+    `;
+  }
+
+  // 3. Set global product redirection phone variable
+  window.whatsappProductPhone = defaultPhone;
+}
+
 // --- Initialize Everything ---
 window.addEventListener("DOMContentLoaded", () => {
   initShowcase();
@@ -997,6 +1027,7 @@ window.addEventListener("DOMContentLoaded", () => {
   initMobileHandsScroll();
   initMobileTruckScroll();
   initScrollReveal();
+  initWhatsAppSupport();
 });
 
 // --- Wholesale Catalog View More Toggle (Products Page) ---

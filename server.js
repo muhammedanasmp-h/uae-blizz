@@ -21,16 +21,19 @@ if (!fs.existsSync(dbPath) || fs.readFileSync(dbPath, 'utf8').trim() === '') {
     blogs: [],
     mostsold: [],
     enquiries: [],
-    collection: []
+    collection: [],
+    agents: []
   };
   fs.writeFileSync(dbPath, JSON.stringify(initialData, null, 2));
 }
 
 function readDb() {
   try {
-    return JSON.parse(fs.readFileSync(dbPath, 'utf8'));
+    const data = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
+    if (!data.agents) data.agents = [];
+    return data;
   } catch (err) {
-    return { products: [], blogs: [], mostsold: [], enquiries: [] };
+    return { products: [], blogs: [], mostsold: [], enquiries: [], collection: [], agents: [] };
   }
 }
 
@@ -104,11 +107,17 @@ class MockModel {
 
   static find(query = {}) {
     let items = MockModel.getCollection(this.collectionName);
-    if (query.isVisible !== undefined) {
-      items = items.filter(i => i.isVisible === (query.isVisible === true || query.isVisible === 'true'));
-    }
-    if (query.isPublished !== undefined) {
-      items = items.filter(i => i.isPublished === (query.isPublished === true || query.isPublished === 'true'));
+    for (const key of Object.keys(query)) {
+      items = items.filter(i => {
+        let val = query[key];
+        if (val === true || val === 'true') {
+          return i[key] === true || i[key] === 'true';
+        }
+        if (val === false || val === 'false') {
+          return i[key] === false || i[key] === 'false' || i[key] === undefined;
+        }
+        return i[key] === val;
+      });
     }
     return new MockQuery(items);
   }
@@ -141,14 +150,17 @@ class MockModel {
 
   static async countDocuments(query = {}) {
     let items = MockModel.getCollection(this.collectionName);
-    if (query.isVisible !== undefined) {
-      items = items.filter(i => i.isVisible === (query.isVisible === true || query.isVisible === 'true'));
-    }
-    if (query.badge === 'soldout') {
-      items = items.filter(i => i.badge === 'soldout');
-    }
-    if (query.isPublished !== undefined) {
-      items = items.filter(i => i.isPublished === (query.isPublished === true || query.isPublished === 'true'));
+    for (const key of Object.keys(query)) {
+      items = items.filter(i => {
+        let val = query[key];
+        if (val === true || val === 'true') {
+          return i[key] === true || i[key] === 'true';
+        }
+        if (val === false || val === 'false') {
+          return i[key] === false || i[key] === 'false' || i[key] === undefined;
+        }
+        return i[key] === val;
+      });
     }
     return items.length;
   }
@@ -196,6 +208,12 @@ class MockCollectionProduct extends MockModel {
     if (this.price !== undefined) this.price = parseFloat(this.price) || 0;
   }
 }
+class MockAgent extends MockModel {
+  static get collectionName() { return 'agents'; }
+  constructor(data) {
+    super('agents', data);
+  }
+}
 
 function useJsonFallback() {
   Product = MockProduct;
@@ -203,6 +221,7 @@ function useJsonFallback() {
   MostSold = MockMostSold;
   Enquiry = MockEnquiry;
   CollectionProduct = MockCollectionProduct;
+  Agent = MockAgent;
 }
 
 // ── Middleware ────────────────────────────────────────────────────────────────
@@ -255,7 +274,12 @@ const connectDb = async () => {
 // ── Multer (Image Upload) ─────────────────────────────────────────────────────
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const folder = req.baseUrl.includes('blog') ? 'uploads/blog' : 'uploads/products';
+    let folder = 'uploads/products';
+    if (req.originalUrl.includes('blog')) {
+      folder = 'uploads/blog';
+    } else if (req.originalUrl.includes('agents')) {
+      folder = 'uploads/agents';
+    }
     fs.mkdirSync(folder, { recursive: true });
     cb(null, folder);
   },
@@ -437,6 +461,18 @@ const CollectionProductSchema = new mongoose.Schema({
 });
 
 let CollectionProduct = mongoose.model('CollectionProduct', CollectionProductSchema);
+
+const AgentSchema = new mongoose.Schema({
+  name:      { type: String, required: true, trim: true },
+  phone:     { type: String, required: true, trim: true },
+  role:      { type: String, default: 'Sales Manager' },
+  label:     { type: String, default: 'Chat with Sales' },
+  image:     { type: String, default: '' },
+  isActive:  { type: Boolean, default: true },
+  createdAt: { type: Date, default: Date.now }
+});
+
+let Agent = mongoose.model('Agent', AgentSchema);
 
 // ── Admin Auth Middleware ─────────────────────────────────────────────────────
 function adminAuth(req, res, next) {
@@ -890,16 +926,89 @@ app.delete('/api/admin/enquiries/:id', adminAuth, async (req, res) => {
 // ── Stats Route (Dashboard) ───────────────────────────────────────────────────
 app.get('/api/admin/stats', adminAuth, async (req, res) => {
   try {
-    const [totalProducts, visibleProducts, soldoutProducts, totalPosts, publishedPosts, totalEnquiries, totalCollection] = await Promise.all([
+    const [totalProducts, visibleProducts, soldoutProducts, totalPosts, publishedPosts, totalEnquiries, totalCollection, totalAgents, activeAgents] = await Promise.all([
       Product.countDocuments(),
       Product.countDocuments({ isVisible: true }),
       Product.countDocuments({ badge: 'soldout' }),
       BlogPost.countDocuments(),
       BlogPost.countDocuments({ isPublished: true }),
       Enquiry.countDocuments(),
-      CollectionProduct.countDocuments()
+      CollectionProduct.countDocuments(),
+      Agent.countDocuments(),
+      Agent.countDocuments({ isActive: true })
     ]);
-    res.json({ totalProducts, visibleProducts, soldoutProducts, totalPosts, publishedPosts, totalEnquiries, totalCollection });
+    res.json({ totalProducts, visibleProducts, soldoutProducts, totalPosts, publishedPosts, totalEnquiries, totalCollection, totalAgents, activeAgents });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ── Agent Routes ──────────────────────────────────────────────────────────────
+
+// GET active agents (public)
+app.get('/api/agents', async (req, res) => {
+  try {
+    const agents = await Agent.find({ isActive: true }).sort({ createdAt: 1 });
+    res.json(agents);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET all agents (admin only)
+app.get('/api/admin/agents', adminAuth, async (req, res) => {
+  try {
+    const agents = await Agent.find().sort({ createdAt: 1 });
+    res.json(agents);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST create agent (admin only)
+app.post('/api/agents', adminAuth, upload.single('image'), optimizeUploadedImages, async (req, res) => {
+  try {
+    const data = { ...req.body };
+    if (req.file) {
+      data.image = '/uploads/agents/' + req.file.filename;
+    }
+    data.isActive = data.isActive === 'true' || data.isActive === true;
+    const agent = new Agent(data);
+    await agent.save();
+    res.status(201).json(agent);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// PUT update agent (admin only)
+app.put('/api/agents/:id', adminAuth, upload.single('image'), optimizeUploadedImages, async (req, res) => {
+  try {
+    const data = { ...req.body };
+    if (req.file) {
+      data.image = '/uploads/agents/' + req.file.filename;
+    }
+    data.isActive = data.isActive === 'true' || data.isActive === true;
+    const agent = await Agent.findByIdAndUpdate(req.params.id, data, { new: true, runValidators: true });
+    if (!agent) return res.status(404).json({ error: 'Agent not found' });
+    res.json(agent);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// DELETE agent (admin only)
+app.delete('/api/agents/:id', adminAuth, async (req, res) => {
+  try {
+    const agent = await Agent.findByIdAndDelete(req.params.id);
+    if (!agent) return res.status(404).json({ error: 'Agent not found' });
+    if (agent.image && agent.image.startsWith('/uploads/')) {
+      const filePath = path.join(__dirname, agent.image);
+      if (fs.existsSync(filePath)) {
+        try { fs.unlinkSync(filePath); } catch (_) {}
+      }
+    }
+    res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
