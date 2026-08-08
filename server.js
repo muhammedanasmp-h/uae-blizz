@@ -229,10 +229,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ── Maintenance Mode Middleware (Comment/remove to disable) ───────────────────
-app.use((req, res, next) => {
-  res.status(503).sendFile(path.join(__dirname, 'maintenance.html'));
-});
+// ── Maintenance Mode Middleware (Commented out to keep website live) ───────────
+// app.use((req, res, next) => {
+//   res.status(503).sendFile(path.join(__dirname, 'maintenance.html'));
+// });
 
 
 // Serve static files (HTML, CSS, JS, assets) with extension fallback and optimal caching headers
