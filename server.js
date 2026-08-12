@@ -1,3 +1,4 @@
+// Blizz UAE Backend Server - Database Image Persistence Verified
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
