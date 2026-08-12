@@ -1,7 +1,26 @@
-// Blizz UAE Admin Panel JS Backend Connection
+// --- LocalStorage Safe Access (Prevents crash when cookies/storage are blocked by browser) ---
+function getSavedToken() {
+  try {
+    return localStorage.getItem('blizz_admin_token') || '';
+  } catch (e) {
+    console.warn('LocalStorage access restricted by browser settings:', e);
+    return '';
+  }
+}
 
-const API_BASE = window.location.origin + '/api';
-let adminToken = localStorage.getItem('blizz_admin_token') || '';
+function setSavedToken(token) {
+  try {
+    if (token) {
+      localStorage.setItem('blizz_admin_token', token);
+    } else {
+      localStorage.removeItem('blizz_admin_token');
+    }
+  } catch (e) {
+    console.warn('LocalStorage access restricted by browser settings:', e);
+  }
+}
+
+let adminToken = getSavedToken();
 
 // --- Elements & Nav ---
 const loginOverlay = document.getElementById('login-overlay');
@@ -93,7 +112,7 @@ loginForm.addEventListener('submit', async (e) => {
     const data = await res.json();
     if (res.ok && data.success) {
       adminToken = data.token;
-      localStorage.setItem('blizz_admin_token', adminToken);
+      setSavedToken(adminToken);
       loginOverlay.style.display = 'none';
       document.getElementById('login-password').value = '';
       loadStats();
@@ -107,7 +126,7 @@ loginForm.addEventListener('submit', async (e) => {
 });
 
 btnLogout.addEventListener('click', () => {
-  localStorage.removeItem('blizz_admin_token');
+  setSavedToken('');
   adminToken = '';
   loginOverlay.style.display = 'flex';
 });
@@ -126,7 +145,14 @@ async function loadStats() {
     const res = await fetch(`${API_BASE}/admin/stats`, {
       headers: getAuthHeaders()
     });
-    if (!res.ok) throw new Error('Failed to load stats');
+    if (!res.ok) {
+      if (res.status === 401) {
+        adminToken = '';
+        setSavedToken('');
+        if (loginOverlay) loginOverlay.style.display = 'flex';
+      }
+      throw new Error('Failed to load stats');
+    }
     const data = await res.json();
 
     document.getElementById('stat-total-products').textContent = data.totalProducts || 0;
