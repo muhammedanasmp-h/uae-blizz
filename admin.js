@@ -121,7 +121,7 @@ loginForm.addEventListener('submit', async (e) => {
     }
   } catch (err) {
     console.error(err);
-    alert('Failed to reach backend server. Make sure node app is running.');
+    alert('Login Request Error: ' + (err.message || err));
   }
 });
 
