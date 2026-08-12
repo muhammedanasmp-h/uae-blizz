@@ -277,29 +277,13 @@ const connectDb = async () => {
   }
 };
 
-// ── Multer (Image Upload) ─────────────────────────────────────────────────────
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    let folder = 'uploads/products';
-    if (req.originalUrl.includes('blog')) {
-      folder = 'uploads/blog';
-    } else if (req.originalUrl.includes('agents')) {
-      folder = 'uploads/agents';
-    }
-    fs.mkdirSync(folder, { recursive: true });
-    cb(null, folder);
-  },
-  filename: (req, file, cb) => {
-    const unique = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, unique + path.extname(file.originalname));
-  }
-});
+// ── Multer (Memory Storage for Direct MongoDB Image Persistence) ──────────────
 const upload = multer({
-  storage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
   fileFilter: (req, file, cb) => {
     const allowed = /jpeg|jpg|png|gif|webp/;
-    if (allowed.test(path.extname(file.originalname).toLowerCase())) {
+    if (allowed.test(path.extname(file.originalname).toLowerCase()) || allowed.test(file.mimetype)) {
       cb(null, true);
     } else {
       cb(new Error('Only image files are allowed!'));
@@ -312,68 +296,46 @@ const productUpload = upload.fields([
   { name: 'bgImage', maxCount: 1 }
 ]);
 
-// Image compression helper with sharp (compression without losing quality)
-async function optimizeImage(filePath) {
-  if (!filePath) return;
-  const ext = path.extname(filePath).toLowerCase();
-  
-  // Create a temporary file path
-  const tempPath = filePath + '.tmp';
-  
+// Helper: Compress image with Sharp & convert to Base64 WebP Data URI for MongoDB storage
+async function processImageToBase64(file) {
+  if (!file || !file.buffer) return null;
   try {
-    let pipeline = sharp(filePath);
-    
-    // Get image metadata to check width/height
+    let pipeline = sharp(file.buffer);
     const metadata = await pipeline.metadata();
     
-    // Resize if too large (e.g. max width 1200px)
-    if (metadata.width > 1200) {
-      pipeline = pipeline.resize({ width: 1200, withoutEnlargement: true });
+    // Resize if width > 800px for optimal performance and fast database loads
+    if (metadata.width > 800) {
+      pipeline = pipeline.resize({ width: 800, withoutEnlargement: true });
     }
     
-    // Apply compression based on format
-    if (ext === '.jpg' || ext === '.jpeg') {
-      pipeline = pipeline.jpeg({ quality: 82, progressive: true });
-    } else if (ext === '.png') {
-      pipeline = pipeline.png({ compressionLevel: 8, palette: true });
-    } else if (ext === '.webp') {
-      pipeline = pipeline.webp({ quality: 80 });
-    }
-    
-    await pipeline.toFile(tempPath);
-    
-    // Overwrite the original file with the optimized one
-    fs.renameSync(tempPath, filePath);
-    console.log(`⚡ Optimized image: ${filePath}`);
+    // Compress to WebP (80% quality)
+    const compressedBuffer = await pipeline.webp({ quality: 80 }).toBuffer();
+    return `data:image/webp;base64,${compressedBuffer.toString('base64')}`;
   } catch (err) {
-    console.error(`❌ Failed to optimize image ${filePath}:`, err.message);
-    // Cleanup temp file if it exists
-    if (fs.existsSync(tempPath)) {
-      try { fs.unlinkSync(tempPath); } catch (_) {}
-    }
+    console.error('❌ Error processing image to Base64:', err.message);
+    const mime = file.mimetype || 'image/jpeg';
+    return `data:${mime};base64,${file.buffer.toString('base64')}`;
   }
 }
 
-// Middleware to automatically compress uploaded files
+// Middleware to automatically process uploaded files into compressed Base64 strings
 const optimizeUploadedImages = async (req, res, next) => {
   try {
-    // 1. Handle single file (req.file)
     if (req.file) {
-      await optimizeImage(req.file.path);
+      req.file.base64 = await processImageToBase64(req.file);
     }
-    // 2. Handle multiple files (req.files)
     if (req.files) {
       for (const fieldName of Object.keys(req.files)) {
         const files = req.files[fieldName];
         if (Array.isArray(files)) {
           for (const file of files) {
-            await optimizeImage(file.path);
+            file.base64 = await processImageToBase64(file);
           }
         }
       }
     }
   } catch (err) {
-    console.error('Error optimizing uploaded images:', err);
+    console.error('Error processing uploaded images:', err);
   }
   next();
 };
@@ -527,11 +489,11 @@ app.post('/api/products', adminAuth, productUpload, optimizeUploadedImages, asyn
   try {
     const data = { ...req.body };
     if (req.files) {
-      if (req.files['image'] && req.files['image'][0]) {
-        data.image = '/uploads/products/' + req.files['image'][0].filename;
+      if (req.files['image'] && req.files['image'][0] && req.files['image'][0].base64) {
+        data.image = req.files['image'][0].base64;
       }
-      if (req.files['bgImage'] && req.files['bgImage'][0]) {
-        data.bgImage = '/uploads/products/' + req.files['bgImage'][0].filename;
+      if (req.files['bgImage'] && req.files['bgImage'][0] && req.files['bgImage'][0].base64) {
+        data.bgImage = req.files['bgImage'][0].base64;
       }
     }
     // Convert booleans & numbers
@@ -555,11 +517,11 @@ app.put('/api/products/:id', adminAuth, productUpload, optimizeUploadedImages, a
   try {
     const data = { ...req.body };
     if (req.files) {
-      if (req.files['image'] && req.files['image'][0]) {
-        data.image = '/uploads/products/' + req.files['image'][0].filename;
+      if (req.files['image'] && req.files['image'][0] && req.files['image'][0].base64) {
+        data.image = req.files['image'][0].base64;
       }
-      if (req.files['bgImage'] && req.files['bgImage'][0]) {
-        data.bgImage = '/uploads/products/' + req.files['bgImage'][0].filename;
+      if (req.files['bgImage'] && req.files['bgImage'][0] && req.files['bgImage'][0].base64) {
+        data.bgImage = req.files['bgImage'][0].base64;
       }
     }
     data.isVisible = data.isVisible === 'true' || data.isVisible === true;
@@ -621,11 +583,11 @@ app.post('/api/collection', adminAuth, productUpload, optimizeUploadedImages, as
   try {
     const data = { ...req.body };
     if (req.files) {
-      if (req.files['image'] && req.files['image'][0]) {
-        data.image = '/uploads/products/' + req.files['image'][0].filename;
+      if (req.files['image'] && req.files['image'][0] && req.files['image'][0].base64) {
+        data.image = req.files['image'][0].base64;
       }
-      if (req.files['bgImage'] && req.files['bgImage'][0]) {
-        data.bgImage = '/uploads/products/' + req.files['bgImage'][0].filename;
+      if (req.files['bgImage'] && req.files['bgImage'][0] && req.files['bgImage'][0].base64) {
+        data.bgImage = req.files['bgImage'][0].base64;
       }
     }
     data.isVisible = data.isVisible === 'true' || data.isVisible === true;
@@ -645,11 +607,11 @@ app.put('/api/collection/:id', adminAuth, productUpload, optimizeUploadedImages,
   try {
     const data = { ...req.body };
     if (req.files) {
-      if (req.files['image'] && req.files['image'][0]) {
-        data.image = '/uploads/products/' + req.files['image'][0].filename;
+      if (req.files['image'] && req.files['image'][0] && req.files['image'][0].base64) {
+        data.image = req.files['image'][0].base64;
       }
-      if (req.files['bgImage'] && req.files['bgImage'][0]) {
-        data.bgImage = '/uploads/products/' + req.files['bgImage'][0].filename;
+      if (req.files['bgImage'] && req.files['bgImage'][0] && req.files['bgImage'][0].base64) {
+        data.bgImage = req.files['bgImage'][0].base64;
       }
     }
     data.isVisible = data.isVisible === 'true' || data.isVisible === true;
@@ -700,7 +662,7 @@ app.post('/api/most-sold', adminAuth, upload.single('image'), optimizeUploadedIm
       return res.status(400).json({ error: 'Limit of product reached for this section' });
     }
     const data = { ...req.body };
-    if (req.file) data.image = '/uploads/products/' + req.file.filename;
+    if (req.file && req.file.base64) data.image = req.file.base64;
     const item = new MostSold(data);
     await item.save();
     res.status(201).json(item);
@@ -712,7 +674,7 @@ app.post('/api/most-sold', adminAuth, upload.single('image'), optimizeUploadedIm
 app.put('/api/most-sold/:id', adminAuth, upload.single('image'), optimizeUploadedImages, async (req, res) => {
   try {
     const data = { ...req.body };
-    if (req.file) data.image = '/uploads/products/' + req.file.filename;
+    if (req.file && req.file.base64) data.image = req.file.base64;
     const item = await MostSold.findByIdAndUpdate(req.params.id, data, { new: true, runValidators: true });
     if (!item) return res.status(404).json({ error: 'Product not found' });
     res.json(item);
@@ -772,7 +734,7 @@ app.get('/api/blog/:slug', async (req, res) => {
 app.post('/api/blog', adminAuth, upload.single('image'), optimizeUploadedImages, async (req, res) => {
   try {
     const data = { ...req.body };
-    if (req.file) data.image = '/uploads/blog/' + req.file.filename;
+    if (req.file && req.file.base64) data.image = req.file.base64;
     data.isPublished = data.isPublished === 'true' || data.isPublished === true;
     if (data.date) data.date = new Date(data.date);
 
@@ -788,7 +750,7 @@ app.post('/api/blog', adminAuth, upload.single('image'), optimizeUploadedImages,
 app.put('/api/blog/:id', adminAuth, upload.single('image'), optimizeUploadedImages, async (req, res) => {
   try {
     const data = { ...req.body };
-    if (req.file) data.image = '/uploads/blog/' + req.file.filename;
+    if (req.file && req.file.base64) data.image = req.file.base64;
     data.isPublished = data.isPublished === 'true' || data.isPublished === true;
     if (data.date) data.date = new Date(data.date);
 
@@ -975,8 +937,8 @@ app.get('/api/admin/agents', adminAuth, async (req, res) => {
 app.post('/api/agents', adminAuth, upload.single('image'), optimizeUploadedImages, async (req, res) => {
   try {
     const data = { ...req.body };
-    if (req.file) {
-      data.image = '/uploads/agents/' + req.file.filename;
+    if (req.file && req.file.base64) {
+      data.image = req.file.base64;
     }
     data.isActive = data.isActive === 'true' || data.isActive === true;
     const agent = new Agent(data);
@@ -991,8 +953,8 @@ app.post('/api/agents', adminAuth, upload.single('image'), optimizeUploadedImage
 app.put('/api/agents/:id', adminAuth, upload.single('image'), optimizeUploadedImages, async (req, res) => {
   try {
     const data = { ...req.body };
-    if (req.file) {
-      data.image = '/uploads/agents/' + req.file.filename;
+    if (req.file && req.file.base64) {
+      data.image = req.file.base64;
     }
     data.isActive = data.isActive === 'true' || data.isActive === true;
     const agent = await Agent.findByIdAndUpdate(req.params.id, data, { new: true, runValidators: true });
