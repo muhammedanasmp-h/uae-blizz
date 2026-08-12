@@ -257,20 +257,18 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
   }
 }));
 
-// Disable buffering so queries fail instantly on connection drop
-mongoose.set('bufferCommands', false);
-
-// We will connect and start the server at the bottom of the file
+// MongoDB Connection Helper (Supports both MONGODB_URI and MONGO_URI from Hostinger)
 let dbConnected = false;
 const connectDb = async () => {
-  if (!process.env.MONGO_URI) {
-    console.log('⚠️ MONGO_URI not defined, using JSON database');
+  const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URI;
+  if (!mongoUri) {
+    console.log('⚠️ Neither MONGODB_URI nor MONGO_URI is defined, using JSON database fallback');
     useJsonFallback();
     return;
   }
   try {
-    await mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 5000 });
-    console.log('✅ MongoDB connected');
+    const conn = await mongoose.connect(mongoUri);
+    console.log(`✅ MongoDB connected successfully: ${conn.connection.host}`);
     dbConnected = true;
   } catch (err) {
     console.error('❌ MongoDB error, falling back to local JSON database:', err.message);
