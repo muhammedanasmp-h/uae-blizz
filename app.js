@@ -1013,11 +1013,11 @@ function initWhatsAppSupport() {
   if (indexButtonsContainer) {
     indexButtonsContainer.innerHTML = `
       <a href="https://wa.me/${defaultPhone}" target="_blank" class="whatsapp-btn whatsapp-btn-main">
-        <img src="asset/whatsapp logo.png" alt="WhatsApp" style="width: 20px; height: 20px; object-fit: contain; margin-right: 8px; vertical-align: middle;">
+        <img src="asset/whatsapp logo.webp" alt="WhatsApp" style="width: 20px; height: 20px; object-fit: contain; margin-right: 8px; vertical-align: middle;" loading="lazy" decoding="async">
         Chat with Sales
       </a>
       <a href="https://wa.me/${defaultPhone}" target="_blank" class="whatsapp-btn whatsapp-btn-outline">
-        <img src="asset/whatsapp logo.png" alt="WhatsApp" style="width: 20px; height: 20px; object-fit: contain; margin-right: 8px; vertical-align: middle;">
+        <img src="asset/whatsapp logo.webp" alt="WhatsApp" style="width: 20px; height: 20px; object-fit: contain; margin-right: 8px; vertical-align: middle;" loading="lazy" decoding="async">
         WhatsApp Support
       </a>
     `;
