@@ -691,7 +691,7 @@ function renderQuickMenu() {
     
     card.innerHTML = `
       <div class="qm-img-wrapper">
-        <img src="${p.image}" alt="${p.name}" class="qm-img">
+        <img src="${p.image}" alt="${p.name}" class="qm-img" loading="lazy" decoding="async">
       </div>
       <h4 class="qm-card-title">${p.name}</h4>
       <p class="qm-card-desc">${shortDesc}</p>

@@ -9,8 +9,13 @@ const fs = require('fs');
 const nodemailer = require('nodemailer');
 const sharp = require('sharp');
 
+const compression = require('compression');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Enable Gzip/Brotli compression for all HTTP responses
+app.use(compression());
 
 // ── JSON Database Fallback ───────────────────────────────────────────────────
 const dbPath = path.join(__dirname, 'db.json');
