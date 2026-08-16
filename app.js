@@ -469,11 +469,11 @@ function changeProduct(index) {
     void waveOverlay.offsetWidth; // Reflow
     waveOverlay.classList.add("animating");
 
-    // Mid-wave: update the 'Premium Cleaning' span color as wave passes over it (~1800ms)
+    // Mid-wave: update the 'Premium Cleaning' span color as wave passes over it (~350ms)
     setTimeout(() => {
       document.documentElement.style.setProperty("--theme-accent", prod.accentColor);
       document.documentElement.style.setProperty("--theme-glow", prod.glowColor);
-    }, 1800);
+    }, 350);
 
     // Fade out / slide down product image
     activeProductImg.classList.add("swapping");
@@ -481,7 +481,7 @@ function changeProduct(index) {
     // Update Dots immediately
     updateOrbitRotations();
 
-    // At 4000ms (transition finished and screen fully covered by wave), swap content, apply base colors, reset overlay
+    // At 700ms (transition finished and screen fully covered by wave), swap content, apply base colors, reset overlay
     setTimeout(() => {
       document.documentElement.style.setProperty("--theme-bg-gradient", prod.bgGradient);
       document.documentElement.style.setProperty("--theme-shape-gradient", prod.shapeGradient || prod.bgGradient);
@@ -519,7 +519,7 @@ function changeProduct(index) {
       // Instantly reset wave overlay back above the viewport
       waveOverlay.classList.remove("animating");
       isTransitioning = false;
-    }, 4000);
+    }, 700);
 
   } else {
     // Desktop Transition (no wave overlay)
