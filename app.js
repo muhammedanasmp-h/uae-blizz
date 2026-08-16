@@ -6,7 +6,7 @@ const catalogProducts = [
     category: "detergent",
     desc: "Concentrated B2B laundry detergent with fabric-protecting agents and active enzymes for deep cleaning.",
     packaging: "20L Canister <span>(Also available in 5L)</span>",
-    image: "asset/products/liquid detergent 4kg lavender.png?v=3",
+    image: "asset/products/liquid detergent 4kg lavender.webp?v=4",
     badge: "Popular"
   },
   {
@@ -14,7 +14,7 @@ const catalogProducts = [
     category: "detergent",
     desc: "High-performance laundry liquid delivering a refreshing ocean scent, tailored for large-scale hospitality needs.",
     packaging: "20L Canister <span>(Also available in 5L)</span>",
-    image: "asset/products/liquid detergent 4kg ocean.png?v=3",
+    image: "asset/products/liquid detergent 4kg ocean.webp?v=4",
     badge: "New"
   },
   {
@@ -22,7 +22,7 @@ const catalogProducts = [
     category: "detergent",
     desc: "Premium commercial fabric conditioner providing long-lasting softness and fresh floral scent.",
     packaging: "20L Canister <span>(Also available in 5L)</span>",
-    image: "asset/products/fabric softner floral pink.png?v=3",
+    image: "asset/products/fabric softner floral pink.webp?v=4",
     badge: ""
   },
   {
@@ -30,7 +30,7 @@ const catalogProducts = [
     category: "detergent",
     desc: "Long-lasting freshness with a delightful sandalwood aroma, softening industrial fabrics effortlessly.",
     packaging: "20L Canister <span>(Also available in 5L)</span>",
-    image: "asset/products/fabric softner floral green.png?v=3",
+    image: "asset/products/fabric softner floral green.webp?v=4",
     badge: ""
   },
   {
@@ -38,7 +38,7 @@ const catalogProducts = [
     category: "surface",
     desc: "Streak-free commercial floor disinfectant with natural citrus oil for cleaning marble and tile.",
     packaging: "20L Canister <span>(Also available in 5L)</span>",
-    image: "asset/products/floor cleaner.png?v=3",
+    image: "asset/products/floor cleaner.webp?v=4",
     badge: "Popular"
   },
   {
@@ -46,7 +46,7 @@ const catalogProducts = [
     category: "surface",
     desc: "Heavy-duty glass cleaner that leaves a streak-free, crystal-clear finish on mirrors and glass panels.",
     packaging: "5L Spray Refill <span>(Box of 4)</span>",
-    image: "asset/products/glass cleaner.png?v=3",
+    image: "asset/products/glass cleaner.webp?v=4",
     badge: "New"
   },
   {
@@ -54,7 +54,7 @@ const catalogProducts = [
     category: "disinfectant",
     desc: "Hospital-grade sanitizer and odor eliminator, kills 99.9% of bacteria and viruses on impact.",
     packaging: "20L Canister <span>(Also available in 5L)</span>",
-    image: "asset/products/antiseptic disinfectant.png?v=3",
+    image: "asset/products/antiseptic disinfectant.webp?v=4",
     badge: "Popular"
   },
   {
@@ -62,7 +62,7 @@ const catalogProducts = [
     category: "surface",
     desc: "Powerful grease-cutting dishwashing liquid with a fresh green apple scent. Perfect for commercial kitchens.",
     packaging: "1L Bottles <span>(Box of 12)</span>",
-    image: "asset/products/dish wash 1litr green apple.png?v=3",
+    image: "asset/products/dish wash 1litr green apple.webp?v=4",
     badge: "New"
   },
   {
@@ -70,7 +70,7 @@ const catalogProducts = [
     category: "surface",
     desc: "High-suds, grease-fighting dish soap leaving utensils spotless with a zesty lemon fragrance.",
     packaging: "1L Bottles <span>(Box of 12)</span>",
-    image: "asset/products/dishwash 1litr lemon.png?v=3",
+    image: "asset/products/dishwash 1litr lemon.webp?v=4",
     badge: ""
   },
   {
@@ -78,7 +78,7 @@ const catalogProducts = [
     category: "surface",
     desc: "Sweet strawberry scented dish wash delivering sparkling clean results for culinary facilities.",
     packaging: "1L Bottles <span>(Box of 12)</span>",
-    image: "asset/products/dishwash 1litr strawberry.png?v=3",
+    image: "asset/products/dishwash 1litr strawberry.webp?v=4",
     badge: ""
   },
   {
@@ -86,7 +86,7 @@ const catalogProducts = [
     category: "handcare",
     desc: "Enriched skin-friendly foaming hand wash designed for high-frequency use in corporate offices.",
     packaging: "5L Dispenser Refill <span>(Box of 4)</span>",
-    image: "asset/products/hand wash liq.png?v=3",
+    image: "asset/products/hand wash liq.webp?v=4",
     badge: "Popular"
   }
 ];
@@ -101,25 +101,25 @@ const categoryColors = {
     glowColor: "rgba(124, 58, 237, 0.3)"
   },
   surface: {
-    bgGradient: "linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)",
-    shapeGradient: "linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%)",
-    accentColor: "#2563eb",
-    accentLight: "rgba(37, 99, 235, 0.08)",
-    glowColor: "rgba(37, 99, 235, 0.3)"
+    bgGradient: "linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)",
+    shapeGradient: "linear-gradient(135deg, #22c55e 0%, #14532d 100%)",
+    accentColor: "#16a34a",
+    accentLight: "rgba(22, 163, 74, 0.08)",
+    glowColor: "rgba(22, 163, 74, 0.3)"
   },
   disinfectant: {
-    bgGradient: "linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)",
-    shapeGradient: "linear-gradient(135deg, #22c55e 0%, #064e3b 100%)",
-    accentColor: "#15803d",
-    accentLight: "rgba(21, 128, 61, 0.08)",
-    glowColor: "rgba(21, 128, 61, 0.3)"
+    bgGradient: "linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%)",
+    shapeGradient: "linear-gradient(135deg, #ef4444 0%, #7f1d1d 100%)",
+    accentColor: "#dc2626",
+    accentLight: "rgba(220, 38, 38, 0.08)",
+    glowColor: "rgba(220, 38, 38, 0.3)"
   },
   handcare: {
-    bgGradient: "linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%)",
-    shapeGradient: "linear-gradient(135deg, #ec4899 0%, #831843 100%)",
-    accentColor: "#db2777",
-    accentLight: "rgba(219, 39, 119, 0.08)",
-    glowColor: "rgba(219, 39, 119, 0.3)"
+    bgGradient: "linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)",
+    shapeGradient: "linear-gradient(135deg, #f97316 0%, #7c2d12 100%)",
+    accentColor: "#ea580c",
+    accentLight: "rgba(234, 88, 12, 0.08)",
+    glowColor: "rgba(234, 88, 12, 0.3)"
   }
 };
 
@@ -133,11 +133,11 @@ const productColors = {
     glowColor: "rgba(124, 58, 237, 0.3)"
   },
   "Laundry Liquid - Ocean Breeze": {
-    bgGradient: "linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)",
-    shapeGradient: "linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%)",
-    accentColor: "#2563eb",
-    accentLight: "rgba(37, 99, 235, 0.08)",
-    glowColor: "rgba(37, 99, 235, 0.3)"
+    bgGradient: "linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)",
+    shapeGradient: "linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%)",
+    accentColor: "#0284c7",
+    accentLight: "rgba(2, 132, 199, 0.08)",
+    glowColor: "rgba(2, 132, 199, 0.3)"
   },
   "Fabric Softener - Floral Pink": {
     bgGradient: "linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%)",
@@ -148,31 +148,31 @@ const productColors = {
   },
   "Fabric Softener - Sandal Green": {
     bgGradient: "linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)",
-    shapeGradient: "linear-gradient(135deg, #22c55e 0%, #064e3b 100%)",
-    accentColor: "#15803d",
-    accentLight: "rgba(21, 128, 61, 0.08)",
-    glowColor: "rgba(21, 128, 61, 0.3)"
+    shapeGradient: "linear-gradient(135deg, #10b981 0%, #064e3b 100%)",
+    accentColor: "#059669",
+    accentLight: "rgba(5, 150, 105, 0.08)",
+    glowColor: "rgba(5, 150, 105, 0.3)"
   },
   "Floor Cleaner - Lavender": {
-    bgGradient: "linear-gradient(135deg, #f3f0fc 0%, #e2daf7 100%)",
+    bgGradient: "linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%)",
     shapeGradient: "linear-gradient(135deg, #9333ea 0%, #581c87 100%)",
     accentColor: "#9333ea",
     accentLight: "rgba(147, 51, 234, 0.08)",
     glowColor: "rgba(147, 51, 234, 0.3)"
   },
   "Glass & Window Shine": {
-    bgGradient: "linear-gradient(135deg, #ecfeff 0%, #cffafe 100%)",
-    shapeGradient: "linear-gradient(135deg, #06b6d4 0%, #164e63 100%)",
-    accentColor: "#0891b2",
-    accentLight: "rgba(8, 145, 178, 0.08)",
-    glowColor: "rgba(8, 145, 178, 0.3)"
-  },
-  "Antiseptic Disinfectant": {
     bgGradient: "linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%)",
     shapeGradient: "linear-gradient(135deg, #14b8a6 0%, #115e59 100%)",
     accentColor: "#0d9488",
     accentLight: "rgba(13, 148, 136, 0.08)",
     glowColor: "rgba(13, 148, 136, 0.3)"
+  },
+  "Antiseptic Disinfectant": {
+    bgGradient: "linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%)",
+    shapeGradient: "linear-gradient(135deg, #f43f5e 0%, #881337 100%)",
+    accentColor: "#e11d48",
+    accentLight: "rgba(225, 29, 72, 0.08)",
+    glowColor: "rgba(225, 29, 72, 0.3)"
   },
   "Dish Wash - Green Apple": {
     bgGradient: "linear-gradient(135deg, #f7fee7 0%, #ecfccb 100%)",
@@ -182,21 +182,21 @@ const productColors = {
     glowColor: "rgba(101, 163, 13, 0.3)"
   },
   "Dish Wash - Lemon": {
-    bgGradient: "linear-gradient(135deg, #fefce8 0%, #fef08a 100%)",
+    bgGradient: "linear-gradient(135deg, #fefce8 0%, #fef9c3 100%)",
     shapeGradient: "linear-gradient(135deg, #eab308 0%, #713f12 100%)",
     accentColor: "#ca8a04",
     accentLight: "rgba(202, 138, 4, 0.08)",
     glowColor: "rgba(202, 138, 4, 0.3)"
   },
   "Dish Wash - Strawberry": {
-    bgGradient: "linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%)",
-    shapeGradient: "linear-gradient(135deg, #ef4444 0%, #7f1d1d 100%)",
-    accentColor: "#dc2626",
-    accentLight: "rgba(220, 38, 38, 0.08)",
-    glowColor: "rgba(220, 38, 38, 0.3)"
+    bgGradient: "linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%)",
+    shapeGradient: "linear-gradient(135deg, #fb7185 0%, #9f1239 100%)",
+    accentColor: "#e11d48",
+    accentLight: "rgba(225, 29, 72, 0.08)",
+    glowColor: "rgba(225, 29, 72, 0.3)"
   },
   "Hand Wash - Lavender": {
-    bgGradient: "linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%)",
+    bgGradient: "linear-gradient(135deg, #fae8ff 0%, #f5d0fe 100%)",
     shapeGradient: "linear-gradient(135deg, #d946ef 0%, #701a75 100%)",
     accentColor: "#c026d3",
     accentLight: "rgba(192, 38, 211, 0.08)",
@@ -206,17 +206,17 @@ const productColors = {
 
 // --- Custom Background Image Mapping ---
 const customBgs = {
-  "Laundry Liquid - Lavender": "asset/others/lavandar.png",
-  "Laundry Liquid - Ocean Breeze": "asset/others/Ocean Breeze Laundry Liquid.png",
-  "Fabric Softener - Floral Pink": "asset/others/Fabric Softener floral pink.png",
-  "Fabric Softener - Sandal Green": "asset/others/sandale green.png",
-  "Floor Cleaner - Lavender": "asset/others/lavandar.png",
-  "Glass & Window Shine": "asset/others/glass cleaner.png",
-  "Antiseptic Disinfectant": "asset/others/antisptic disinfectannt.png",
-  "Dish Wash - Green Apple": "asset/others/green apple.png",
-  "Dish Wash - Lemon": "asset/others/lemon.png",
-  "Dish Wash - Strawberry": "asset/others/strawberrry.png",
-  "Hand Wash - Lavender": "asset/others/lavandar.png"
+  "Laundry Liquid - Lavender": "asset/others/lavandar.webp",
+  "Laundry Liquid - Ocean Breeze": "asset/others/Ocean Breeze Laundry Liquid.webp",
+  "Fabric Softener - Floral Pink": "asset/others/Fabric Softener floral pink.webp",
+  "Fabric Softener - Sandal Green": "asset/others/sandale green.webp",
+  "Floor Cleaner - Lavender": "asset/others/lavandar.webp",
+  "Glass & Window Shine": "asset/others/glass cleaner.webp",
+  "Antiseptic Disinfectant": "asset/others/antisptic disinfectannt.webp",
+  "Dish Wash - Green Apple": "asset/others/green apple.webp",
+  "Dish Wash - Lemon": "asset/others/lemon.webp",
+  "Dish Wash - Strawberry": "asset/others/strawberrry.webp",
+  "Hand Wash - Lavender": "asset/others/lavandar.webp"
 };
 
 const heroProducts = catalogProducts.map((p, index) => {
