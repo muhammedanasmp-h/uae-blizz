@@ -236,6 +236,17 @@ app.use(express.urlencoded({ extended: true }));
 // });
 
 
+// Serve robots.txt and sitemap.xml for Search Engine Crawlers
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.sendFile(path.join(__dirname, 'robots.txt'));
+});
+
+app.get('/sitemap.xml', (req, res) => {
+  res.type('application/xml');
+  res.sendFile(path.join(__dirname, 'sitemap.xml'));
+});
+
 // Serve static files (HTML, CSS, JS, assets) with extension fallback and optimal caching headers
 app.use(express.static(path.join(__dirname), {
   extensions: ['html', 'htm'],

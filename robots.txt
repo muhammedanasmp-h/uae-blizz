@@ -1,0 +1,20 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+Allow: /about
+Allow: /products
+Allow: /blog
+Allow: /enquiry
+Allow: /terms-of-sale
+Allow: /privacy-policy
+Allow: /user-manual
+Allow: /sitemap
+
+# Exclude admin dashboard and internal APIs
+Disallow: /admin
+Disallow: /admin.html
+Disallow: /api/
+Disallow: /uploads/
+
+# XML Sitemap Location
+Sitemap: https://blizzcleaningproducts.com/sitemap.xml
