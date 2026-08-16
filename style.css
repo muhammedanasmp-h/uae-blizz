@@ -31,6 +31,10 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html, body {
   width: 100%;
   overflow-x: hidden;
@@ -4001,7 +4005,7 @@ footer {
     width: 330px;
     z-index: 2;
     pointer-events: none;
-    transition: transform 0.1s ease-out;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .mobile-hand img {

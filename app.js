@@ -914,10 +914,10 @@ function initMobileHandsScroll() {
     if (!handsTicking) {
       requestAnimationFrame(() => {
         const scrollY = window.scrollY;
-        const progress = Math.min(scrollY / 300, 1);
+        const progress = Math.min(scrollY / 700, 1);
         
-        const leftTranslate = -100 + (progress * 65);
-        const rightTranslate = 100 - (progress * 75);
+        const leftTranslate = -100 + (progress * 55);
+        const rightTranslate = 100 - (progress * 60);
         
         handLeft.style.transform = `translateX(${leftTranslate}%)`;
         handRight.style.transform = `translateX(${rightTranslate}%)`;
