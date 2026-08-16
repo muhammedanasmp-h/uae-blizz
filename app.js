@@ -768,14 +768,22 @@ function renderQuickMenu() {
 }
 
 // --- Sticky Header Class Toggle ---
+let headerTicking = false;
 window.addEventListener("scroll", () => {
-  // Sticky header class toggle
-  if (window.scrollY > 50) {
-    header.classList.add("scrolled");
-  } else {
-    header.classList.remove("scrolled");
+  if (!headerTicking) {
+    requestAnimationFrame(() => {
+      if (header) {
+        if (window.scrollY > 50) {
+          header.classList.add("scrolled");
+        } else {
+          header.classList.remove("scrolled");
+        }
+      }
+      headerTicking = false;
+    });
+    headerTicking = true;
   }
-});
+}, { passive: true });
 
 // Smooth nav scroll clicks
 navLinks.forEach(link => {
@@ -899,24 +907,25 @@ function initMobileHandsScroll() {
   
   if (!handLeft || !handRight) return;
   
+  let handsTicking = false;
   window.addEventListener("scroll", () => {
-    // Only run on mobile viewport
     if (window.innerWidth > 768) return;
     
-    const scrollY = window.scrollY;
-    // The hands will slide fully in over 300px of scrolling
-    const progress = Math.min(scrollY / 300, 1);
-    
-    // Left hand slides from -100% to -35% (keeping it a bit more to the left)
-    const leftTranslate = -100 + (progress * 65);
-    // Right hand slides from 100% to 25% (keeping it a bit more to the right)
-    const rightTranslate = 100 - (progress * 75);
-    
-    requestAnimationFrame(() => {
-      handLeft.style.transform = `translateX(${leftTranslate}%)`;
-      handRight.style.transform = `translateX(${rightTranslate}%)`;
-    });
-  });
+    if (!handsTicking) {
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        const progress = Math.min(scrollY / 300, 1);
+        
+        const leftTranslate = -100 + (progress * 65);
+        const rightTranslate = 100 - (progress * 75);
+        
+        handLeft.style.transform = `translateX(${leftTranslate}%)`;
+        handRight.style.transform = `translateX(${rightTranslate}%)`;
+        handsTicking = false;
+      });
+      handsTicking = true;
+    }
+  }, { passive: true });
 }
 
 // --- Mobile Truck Scroll Animation ---
@@ -931,36 +940,36 @@ function initMobileTruckScroll() {
   let frontRotation    = 0;      // cumulative rotation degrees
   let rearRotation     = 0;
 
-  // Conversion: how many degrees to rotate per % of truck movement
-  // Truck width ~260px, tire ~32px → circumference ~100px → 1% truck ≈ ~4.7deg
   const DEG_PER_PERCENT = 4.7;
+  let truckTicking = false;
 
   window.addEventListener('scroll', () => {
     if (window.innerWidth > 768) return;
 
-    const sceneRect = scene.getBoundingClientRect();
-    const viewH     = window.innerHeight;
+    if (!truckTicking) {
+      requestAnimationFrame(() => {
+        const sceneRect = scene.getBoundingClientRect();
+        const viewH     = window.innerHeight;
 
-    const rawProgress = 1 - (sceneRect.bottom / (viewH + sceneRect.height));
-    const progress    = Math.max(0, Math.min(1, rawProgress));
+        const rawProgress = 1 - (sceneRect.bottom / (viewH + sceneRect.height));
+        const progress    = Math.max(0, Math.min(1, rawProgress));
 
-    // Truck position in %
-    const translateX = -110 + (progress * 220);
+        const translateX = -110 + (progress * 220);
 
-    // Delta movement this scroll event
-    const delta = translateX - prevTranslateX;
-    prevTranslateX = translateX;
+        const delta = translateX - prevTranslateX;
+        prevTranslateX = translateX;
 
-    // Rotate tires proportional to movement — reverse on scroll back
-    frontRotation += delta * DEG_PER_PERCENT;
-    rearRotation  += delta * DEG_PER_PERCENT;
+        frontRotation += delta * DEG_PER_PERCENT;
+        rearRotation  += delta * DEG_PER_PERCENT;
 
-    requestAnimationFrame(() => {
-      truck.style.transform = `translateX(${translateX}%)`;
-      if (tireFront) tireFront.style.transform = `rotate(${frontRotation}deg)`;
-      if (tireRear)  tireRear.style.transform  = `rotate(${rearRotation}deg)`;
-    });
-  });
+        truck.style.transform = `translateX(${translateX}%)`;
+        if (tireFront) tireFront.style.transform = `rotate(${frontRotation}deg)`;
+        if (tireRear)  tireRear.style.transform  = `rotate(${rearRotation}deg)`;
+        truckTicking = false;
+      });
+      truckTicking = true;
+    }
+  }, { passive: true });
 }
 
 // --- Scroll Reveal Animation Observer ---

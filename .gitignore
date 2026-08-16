@@ -13,3 +13,7 @@ Thumbs.db
 
 # Local JSON database fallback
 db.json
+
+# Reference UI design folder
+refrence ui/
+

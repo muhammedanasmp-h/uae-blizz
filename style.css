@@ -44,7 +44,7 @@ body {
   color: var(--color-text-dark);
   background: var(--theme-bg-gradient);
   min-height: 100vh;
-  transition: var(--transition-smooth);
+  transition: background 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -6097,6 +6097,7 @@ footer {
 .reveal.active {
   opacity: 1;
   transform: translateY(0) translateX(0) scale(1);
+  will-change: auto;
 }
 
 /* Custom Slide Down animation specifically for 3D gallery cards to preserve 3D rotation and perspective */
