@@ -1,3 +1,6 @@
+// --- API Base URL Configuration ---
+const API_BASE = (window.location.protocol.startsWith('http') ? window.location.origin : 'http://localhost:3000') + '/api';
+
 // --- LocalStorage Safe Access (Prevents crash when cookies/storage are blocked by browser) ---
 function getSavedToken() {
   try {
